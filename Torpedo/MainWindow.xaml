@@ -1,0 +1,74 @@
+﻿<Window x:Class="Torpedo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Torpedo"
+        mc:Ignorable="d"
+        Title="Torpedo"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight">
+    <StackPanel Background="#2c2137">
+        <StackPanel Background="#446176">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Turn: " TextWrapping="Wrap" Margin="5"/>
+                <TextBlock Text="Hits: " TextWrapping="Wrap" Margin="5"/>
+                <TextBlock Text="Enemy Hits: " TextWrapping="Wrap" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Canvas Name="EnemyCanvas" Height="300" Width="300" Margin="16 16 8 16">
+                <Canvas.Background>
+                    <DrawingBrush TileMode="Tile" Viewport="0,0,30,30" ViewportUnits="Absolute">
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry Rect="0,0,40,40"/>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#3fac95" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Canvas.Background>
+            </Canvas>
+            <Canvas Name="OwnCanvas" Height="300" Width="300" Margin="8 16 8 16">
+                <Canvas.Background>
+                    <DrawingBrush TileMode="Tile" Viewport="0,0,30,30" ViewportUnits="Absolute">
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry Rect="0,0,40,40"/>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#3fac95" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Canvas.Background>
+            </Canvas>
+            <Canvas Name="RemainingCanvas" Height="300" Width="150" Margin="8 16 16 16">
+                <Canvas.Background>
+                    <DrawingBrush TileMode="Tile" Viewport="0,0,30,30" ViewportUnits="Absolute">
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing>
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry Rect="0,0,50,50"/>
+                                </GeometryDrawing.Geometry>
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="#3fac95" Thickness="1"/>
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Canvas.Background>
+            </Canvas>
+        </StackPanel>
+        <Button Content="Generate" Width="60" Height="32" Padding="0" Margin="0,0,0,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+    </StackPanel>
+
+
+</Window>

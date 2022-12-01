@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\gerix\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\gerix\\.nuget\\packages"
+    ]
+  }
+}
