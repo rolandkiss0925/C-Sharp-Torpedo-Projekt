@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Vector = Torpedo.Models.Vector;
+using Ship = Torpedo.Models.Ship;
+using Player = Torpedo.Models.Player;
 
 namespace Torpedo
 {
@@ -26,7 +28,7 @@ namespace Torpedo
 
         List<Vector> OccupiedSpaces = new List<Vector>();
 
-        Brush NeonGreen = new SolidColorBrush(Color.FromRgb(161, 239, 140));
+        Brush _neonGreen = new SolidColorBrush(Color.FromRgb(161, 239, 140));
 
         //Lehet nem szukseges
         IDictionary<string, int> ShipType = new Dictionary<string, int>() {
@@ -40,27 +42,50 @@ namespace Torpedo
         {
             InitializeComponent();
 
-            DrawShip(3, (new Vector(0, 0)), NeonGreen);
-            DrawShip(3, (new Vector(4, 4)), NeonGreen);
-            DrawShip(2, (new Vector(1, 1)), NeonGreen);
+            var player1 = new Player("Toldi Miklos");
 
+            //Ship ship1 = new Ship(new Vector(4, 4), )
+            Ship ship1 = MakeShip(3, (new Vector(0, 0)), _neonGreen, player1);
+            Ship ship2 = MakeShip(2, (new Vector(2, 4)), _neonGreen, player1);
+            Ship ship3 = MakeShip(5, (new Vector(6, 8)), _neonGreen, player1);
+            Ship ship4 = MakeShip(4, (new Vector(9, 2)), _neonGreen, player1);
+
+            player1.AddShip(ship1, ship2, ship3, ship4);
+
+            DrawShip(ship1, ship2, ship3, ship4);
         }
 
-        private void DrawShip(int shipSize, Vector position, Brush brush)
+        private Ship MakeShip(int shipSize, Vector startPosition, Brush color, Player owner)
         {
-            //1. Szegmens
-            DrawSingleSegment(position, brush);
+            var segments = new List<Vector>();
+            segments.Add(startPosition);
             //TODO: Ellenorozni, hogy szabad-e a hely!!
 
-            int randomFreeDirection = FreeDirectionChooser(shipSize, position);
-            //TODO: Ha -1 a return, akkor nem szabalyos a kirajzolas, mert nem fer el
+            int randomFreeDirection = FreeDirectionChooser(shipSize, startPosition);
+            //TODO: Ha -1 a return, akkor nem szabalyos a pozicio, mert nem fer el
             var directionVector = SetDirectionVector(randomFreeDirection);
             for (int i = 0; i < shipSize--; i++)
             {
-                position += directionVector;
-                DrawSingleSegment(position, brush);
+                startPosition += directionVector;
+                segments.Add(startPosition);
             }
 
+            Ship ship = new Ship(startPosition, segments, color, owner);
+            return ship;
+        }
+
+        private void DrawShip(params Ship[] ships)
+        {
+            foreach (var s in ships)
+            {
+                foreach (var segment in s.Segments)
+                {
+                    DrawSingleSegment(segment, s.Color);
+                }
+            }
+            
+            //1. Szegmens
+            //DrawSingleSegment(ship.StartSegment, /*ship.Color*/ Brushes.Black);
         }
 
         ////0: Bal, 1: Fel, 2: Jobb, 3: Le, -1: Nincs szabad
@@ -131,7 +156,7 @@ namespace Torpedo
         {
             //Egy szegmens merete
             var shape = new Rectangle();
-            shape.Fill = new SolidColorBrush(Color.FromRgb(161, 239, 140));
+            shape.Fill = brush;
             var unitX = OwnCanvas.Width / GameWidth;
             var unitY = OwnCanvas.Height / GameHeight;
             shape.Width = unitX;
@@ -143,6 +168,11 @@ namespace Torpedo
             OccupiedSpaces.Add(position);
             //Szegmens hozzaadas/kirajzolas
             OwnCanvas.Children.Add(shape);
+        }
+
+        private void ClearCanvasFromShips()
+        {
+
         }
     }
 }
