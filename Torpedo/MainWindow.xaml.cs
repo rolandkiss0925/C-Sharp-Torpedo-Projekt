@@ -26,9 +26,11 @@ namespace Torpedo
         private const int GameWidth = 10;
         private const int GameHeight = 10;
 
-        List<Vector> OccupiedSpaces = new List<Vector>();
+        List<Vector> OccupiedSpaces_Own = new List<Vector>();
+        List<Vector> OccupiedSpaces_Enemy = new List<Vector>();
 
         Brush _neonGreen = new SolidColorBrush(Color.FromRgb(161, 239, 140));
+        Brush _lightGreen = new SolidColorBrush(Color.FromRgb(63, 172, 149));
 
         //Lehet nem szukseges
         IDictionary<string, int> ShipType = new Dictionary<string, int>() {
@@ -42,17 +44,32 @@ namespace Torpedo
         {
             InitializeComponent();
 
-            var player1 = new Player("Toldi Miklos");
+            //---------Player 1 próba--------
+            var player1 = new Player("Orban V. Iktor", OwnCanvas);
 
-            //Ship ship1 = new Ship(new Vector(4, 4), )
             Ship ship1 = MakeShip(3, (new Vector(0, 0)), _neonGreen, player1);
             Ship ship2 = MakeShip(2, (new Vector(2, 4)), _neonGreen, player1);
             Ship ship3 = MakeShip(5, (new Vector(6, 8)), _neonGreen, player1);
             Ship ship4 = MakeShip(4, (new Vector(9, 2)), _neonGreen, player1);
 
-            player1.AddShip(ship1, ship2, ship3, ship4);
+            //player1.AddShip(ship1, ship2, ship3, ship4);
+            //-------------------------------
 
-            DrawShip(ship1, ship2, ship3, ship4);
+            //---------Player 2 próba--------
+            var player2 = new Player("Milyen Feri?", EnemyCanvas);
+
+            Ship ship11 = MakeShip(2, (new Vector(0, 0)), _lightGreen, player2);
+            Ship ship22 = MakeShip(3, (new Vector(2, 2)), _lightGreen, player2);
+            Ship ship33 = MakeShip(5, (new Vector(4, 4)), _lightGreen, player2);
+            Ship ship44 = MakeShip(5, (new Vector(6, 6)), _lightGreen, player2);
+            Ship ship55 = MakeShip(4, (new Vector(8, 8)), _lightGreen, player2);
+
+            //player2.AddShip(ship11, ship22, ship33, ship44, ship55);
+            //-------------------------------
+
+
+            DrawShip(OwnCanvas, player1.ShipList.ToArray());
+            DrawShip(EnemyCanvas, player2.ShipList.ToArray());
         }
 
         private Ship MakeShip(int shipSize, Vector startPosition, Brush color, Player owner)
@@ -61,26 +78,27 @@ namespace Torpedo
             segments.Add(startPosition);
             //TODO: Ellenorozni, hogy szabad-e a hely!!
 
-            int randomFreeDirection = FreeDirectionChooser(shipSize, startPosition);
+            int randomFreeDirection = FreeDirectionChooser(shipSize, startPosition, owner);
             //TODO: Ha -1 a return, akkor nem szabalyos a pozicio, mert nem fer el
             var directionVector = SetDirectionVector(randomFreeDirection);
-            for (int i = 0; i < shipSize--; i++)
+            for (int i = 0; i < shipSize-1; i++)
             {
                 startPosition += directionVector;
                 segments.Add(startPosition);
             }
 
             Ship ship = new Ship(startPosition, segments, color, owner);
+            owner.AddShip(ship);
             return ship;
         }
 
-        private void DrawShip(params Ship[] ships)
+        private void DrawShip(Canvas canvas, params Ship[] ships)
         {
             foreach (var s in ships)
             {
                 foreach (var segment in s.Segments)
                 {
-                    DrawSingleSegment(segment, s.Color);
+                    DrawSingleSegment(segment, s.Color, canvas);
                 }
             }
             
@@ -89,13 +107,13 @@ namespace Torpedo
         }
 
         ////0: Bal, 1: Fel, 2: Jobb, 3: Le, -1: Nincs szabad
-        private int FreeDirectionChooser(int shipSize, Vector position)
+        private int FreeDirectionChooser(int shipSize, Vector position, Player owner)
         {
             Random rnd = new Random();
             //0: Bal, 1: Fel, 2: Jobb, 3: Le
             int randDir = rnd.Next(0, 4);
             int iteration = 1;
-            while (!IsDirectionClear(shipSize, position, randDir) && iteration != 4)
+            while (!IsDirectionClear(shipSize, position, randDir, owner) && iteration != 4)
             {
                 randDir++;
                 if (randDir > 3)
@@ -105,7 +123,7 @@ namespace Torpedo
                 iteration++;
             }
 
-            if (IsDirectionClear(shipSize, position, randDir))
+            if (IsDirectionClear(shipSize, position, randDir, owner))
             {
                 //Draw in that direction
                 return randDir;
@@ -114,14 +132,14 @@ namespace Torpedo
             return -1;
         }
 
-        private bool IsDirectionClear(int shipSize, Vector position, int direction)
+        private bool IsDirectionClear(int shipSize, Vector position, int direction, Player owner)
         {
             var directionVector = SetDirectionVector(direction);
-            for (int i = 0; i < shipSize--; i++)
+            for (int i = 0; i < shipSize-1; i++)
             {
                 position += directionVector;
                 //Ha foglalt a position, vagy kiesne a pályáról
-                if (OccupiedSpaces.Contains(position) || (position.X < 0) || (position.X > GameWidth - 1) || (position.Y < 0) || (position.Y > GameHeight - 1))
+                if (owner.AllShipSegments.Contains(position) || (position.X < 0) || (position.X > GameWidth - 1) || (position.Y < 0) || (position.Y > GameHeight - 1))
                 {
                     return false;
                 }
@@ -152,22 +170,21 @@ namespace Torpedo
             return directionVector;
         }
 
-        private void DrawSingleSegment(Vector position, Brush brush)
+        private void DrawSingleSegment(Vector position, Brush brush, Canvas canvas)
         {
             //Egy szegmens merete
             var shape = new Rectangle();
             shape.Fill = brush;
-            var unitX = OwnCanvas.Width / GameWidth;
-            var unitY = OwnCanvas.Height / GameHeight;
+            var unitX = canvas.Width / GameWidth;
+            var unitY = canvas.Height / GameHeight;
             shape.Width = unitX;
             shape.Height = unitY;
             //Szegmens poz.
             Canvas.SetTop(shape, unitY * position.Y);
             Canvas.SetLeft(shape, unitX * position.X);
-            //szegmens hozzaadasa a foglalt helyekhez
-            OccupiedSpaces.Add(position);
+           
             //Szegmens hozzaadas/kirajzolas
-            OwnCanvas.Children.Add(shape);
+            canvas.Children.Add(shape);
         }
 
         private void ClearCanvasFromShips()
