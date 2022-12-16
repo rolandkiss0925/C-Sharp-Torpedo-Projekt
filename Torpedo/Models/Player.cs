@@ -23,19 +23,27 @@ namespace Torpedo.Models
             this.AllShipSegments = new List<Vector>();
         }
 
-        public void AddShip(params Ship[] ship)
+        public void AddShip(params Ship[] ships)
         {
-            for (int i = 0; i < ship.Length; i++)
+            for (int i = 0; i < ships.Length; i++)
             {
-                this.ShipList.Add(ship[i]);
-                foreach (var segment in ship[i].Segments)
+                this.ShipList.Add(ships[i]);
+                foreach (var segment in ships[i].Segments)
                 {
                     AllShipSegments.Add(segment);
                 }
             }
-            
         }
 
+        public List<Ship> RemoveAllShip()
+        {
+            List<Ship> returnList = this.ShipList;
+
+            this.AllShipSegments.Clear();
+            this.ShipList.Clear();
+
+            return returnList;
+        }
     }
 
 }

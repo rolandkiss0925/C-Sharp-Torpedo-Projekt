@@ -67,7 +67,10 @@
                 </Canvas.Background>
             </Canvas>
         </StackPanel>
-        <Button Content="Generate" Width="60" Height="32" Padding="0" Margin="0,0,0,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Generate" Click="Generate_Click"  Width="60" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+        </StackPanel>
+
     </StackPanel>
 
 

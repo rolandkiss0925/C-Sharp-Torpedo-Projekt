@@ -23,21 +23,22 @@ namespace Torpedo
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int GameWidth = 10;
-        private const int GameHeight = 10;
-
-        List<Vector> OccupiedSpaces_Own = new List<Vector>();
-        List<Vector> OccupiedSpaces_Enemy = new List<Vector>();
+        private const int _gameWidth = 10;
+        private const int _gameHeight = 10;
 
         Brush _neonGreen = new SolidColorBrush(Color.FromRgb(161, 239, 140));
         Brush _lightGreen = new SolidColorBrush(Color.FromRgb(63, 172, 149));
+
+        //Ideiglenes
+        Player player1 = new Player("", null);
+        Player player2 = new Player("", null);
 
         //Lehet nem szukseges
         IDictionary<string, int> ShipType = new Dictionary<string, int>() {
             {"CARRIER_5", 5 },
             {"BATTLESHIP_4", 4 },
             {"SUBMARINE_3", 3 },
-            {"DESTROYER_2", 2 },
+            {"DESTROYER_2", 2 }, //2x
         };
 
         public MainWindow()
@@ -45,41 +46,76 @@ namespace Torpedo
             InitializeComponent();
 
             //---------Player 1 próba--------
-            var player1 = new Player("Orban V. Iktor", OwnCanvas);
+            player1 = new Player("Orban V. Iktor", OwnCanvas);
 
-            Ship ship1 = MakeShip(3, (new Vector(0, 0)), _neonGreen, player1);
-            Ship ship2 = MakeShip(2, (new Vector(2, 4)), _neonGreen, player1);
-            Ship ship3 = MakeShip(5, (new Vector(6, 8)), _neonGreen, player1);
-            Ship ship4 = MakeShip(4, (new Vector(9, 2)), _neonGreen, player1);
+            //Ship ship1 = MakeShip(3, (new Vector(0, 0)), _neonGreen, player1);
+            //Ship ship2 = MakeShip(2, (new Vector(2, 4)), _neonGreen, player1);
+            //Ship ship3 = MakeShip(5, (new Vector(6, 8)), _neonGreen, player1);
+            //Ship ship4 = MakeShip(4, (new Vector(9, 2)), _neonGreen, player1);
 
             //player1.AddShip(ship1, ship2, ship3, ship4);
             //-------------------------------
 
             //---------Player 2 próba--------
-            var player2 = new Player("Milyen Feri?", EnemyCanvas);
-
+            player2 = new Player("Milyen Feri?", EnemyCanvas);
+            /*
             Ship ship11 = MakeShip(2, (new Vector(0, 0)), _lightGreen, player2);
             Ship ship22 = MakeShip(3, (new Vector(2, 2)), _lightGreen, player2);
             Ship ship33 = MakeShip(5, (new Vector(4, 4)), _lightGreen, player2);
             Ship ship44 = MakeShip(5, (new Vector(6, 6)), _lightGreen, player2);
             Ship ship55 = MakeShip(4, (new Vector(8, 8)), _lightGreen, player2);
-
+            */
             //player2.AddShip(ship11, ship22, ship33, ship44, ship55);
             //-------------------------------
 
+            //DrawShip(OwnCanvas, player1.ShipList.ToArray());
+            //DrawShip(EnemyCanvas, player2.ShipList.ToArray());
+        }
 
-            DrawShip(OwnCanvas, player1.ShipList.ToArray());
-            DrawShip(EnemyCanvas, player2.ShipList.ToArray());
+        private List<Ship> GenerateShips(Player player, Brush color)
+        {
+            List<Ship> resultList = new List<Ship>();
+
+            RemoveShipsFromCanvasAndPlayer(player);
+            Random r = new Random();
+
+            //i<=5 -> 5 ships
+            for (int i = 2; i <= 5; i++)
+            {
+                if (i == 2)
+                {
+                    MakeShip(i, new Vector(r.Next(0, _gameWidth), r.Next(0, _gameHeight)), color, player);
+                }
+                while (MakeShip(i, new Vector(r.Next(0, _gameWidth), r.Next(0, _gameHeight)), color, player) == null)
+                {
+                    //MessageBox.Show("Starting position duplicate OR no free space");
+                }
+            }
+            DrawShip(player.Canvas, player.ShipList.ToArray());
+            return resultList;
         }
 
         private Ship MakeShip(int shipSize, Vector startPosition, Brush color, Player owner)
         {
-            var segments = new List<Vector>();
-            segments.Add(startPosition);
-            //TODO: Ellenorozni, hogy szabad-e a hely!!
+            //null ha startposition foglalt
+            if (owner.AllShipSegments.Contains(startPosition))
+            {
+                //MessageBox.Show("Start dupe");
+                return null;
+            }
 
             int randomFreeDirection = FreeDirectionChooser(shipSize, startPosition, owner);
-            //TODO: Ha -1 a return, akkor nem szabalyos a pozicio, mert nem fer el
+
+            //null ha nincs szabad hely
+            if (randomFreeDirection == -1)
+            {
+                //MessageBox.Show("There were no free spaces!");
+                return null;
+            }
+
+            var segments = new List<Vector>();
+            segments.Add(startPosition);
+
             var directionVector = SetDirectionVector(randomFreeDirection);
             for (int i = 0; i < shipSize-1; i++)
             {
@@ -96,10 +132,22 @@ namespace Torpedo
         {
             foreach (var s in ships)
             {
-                foreach (var segment in s.Segments)
+                for (int i = 0; i < s.Segments.Count; i++)
+                {
+                    if (i==0)
+                    {
+                        DrawSingleSegment(s.Segments[i], _lightGreen, canvas);
+                    }
+                    else
+                    {
+                        DrawSingleSegment(s.Segments[i], s.Color, canvas);
+                    }
+                }
+                //TODO cserelni vissza a kirajzolast
+                /*foreach (var segment in s.Segments)
                 {
                     DrawSingleSegment(segment, s.Color, canvas);
-                }
+                }*/
             }
             
             //1. Szegmens
@@ -139,7 +187,7 @@ namespace Torpedo
             {
                 position += directionVector;
                 //Ha foglalt a position, vagy kiesne a pályáról
-                if (owner.AllShipSegments.Contains(position) || (position.X < 0) || (position.X > GameWidth - 1) || (position.Y < 0) || (position.Y > GameHeight - 1))
+                if (owner.AllShipSegments.Contains(position) || (position.X < 0) || (position.X > _gameWidth - 1) || (position.Y < 0) || (position.Y > _gameHeight - 1))
                 {
                     return false;
                 }
@@ -175,8 +223,8 @@ namespace Torpedo
             //Egy szegmens merete
             var shape = new Rectangle();
             shape.Fill = brush;
-            var unitX = canvas.Width / GameWidth;
-            var unitY = canvas.Height / GameHeight;
+            var unitX = canvas.Width / _gameWidth;
+            var unitY = canvas.Height / _gameHeight;
             shape.Width = unitX;
             shape.Height = unitY;
             //Szegmens poz.
@@ -187,9 +235,16 @@ namespace Torpedo
             canvas.Children.Add(shape);
         }
 
-        private void ClearCanvasFromShips()
+        private void RemoveShipsFromCanvasAndPlayer(Player owner)
         {
-
+            owner.Canvas.Children.Clear();
+            owner.RemoveAllShip();
         }
+
+        private void Generate_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateShips(player1, _neonGreen);
+        }
+
     }
 }
