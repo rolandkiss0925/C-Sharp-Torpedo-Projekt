@@ -18,9 +18,7 @@ using Player = Torpedo.Models.Player;
 
 namespace Torpedo
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+  
     public partial class MainWindow : Window
     {
         private const int _gameWidth = 10;
@@ -34,14 +32,6 @@ namespace Torpedo
         //Ideiglenes
         Player player1 = new Player("", null);
         Player player2 = new Player("", null);
-
-        //Lehet nem szukseges
-        IDictionary<string, int> ShipType = new Dictionary<string, int>() {
-            {"CARRIER_5", 5 },
-            {"BATTLESHIP_4", 4 },
-            {"SUBMARINE_3", 3 },
-            {"DESTROYER_2", 2 }, //2x
-        };
 
         public MainWindow()
         {
@@ -138,7 +128,7 @@ namespace Torpedo
                 {
                     if (i==0)
                     {
-                        DrawSingleSegment(s.Segments[i], _greenLight, canvas);
+                        DrawSingleSegment(s.Segments[i], _green, canvas);
                     }
                     else
                     {
@@ -243,9 +233,14 @@ namespace Torpedo
             owner.RemoveAllShip();
         }
 
-        private void Generate_Click(object sender, RoutedEventArgs e)
+        private void GenerateP1_Click(object sender, RoutedEventArgs e)
         {
-            GenerateShips(player1, _greenLightest);
+            GenerateShips(player1, _greenLight);
+        }
+
+        private void GenerateP2_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateShips(player2, _green);
         }
 
     }
