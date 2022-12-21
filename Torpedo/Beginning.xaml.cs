@@ -25,12 +25,12 @@ namespace Torpedo
 
         private void OnPlayer1vsPlayer2(object sender, RoutedEventArgs e)
         {
-            
+            this.NavigationService.Navigate(new Player1vsPlayer2());
         }
 
         private void OnPlayervsComputer(object sender, RoutedEventArgs e)
         {
-           
+            
         }
 
         private void OnScores(object sender, RoutedEventArgs e)
