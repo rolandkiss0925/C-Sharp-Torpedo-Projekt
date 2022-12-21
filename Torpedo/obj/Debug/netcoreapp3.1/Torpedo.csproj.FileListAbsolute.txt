@@ -58,3 +58,7 @@ C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Torpe
 C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Torpedo.dll
 C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Torpedo.pdb
 C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Torpedo.genruntimeconfig.cache
+C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Beginning.g.cs
+C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Beginning.baml
+C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Home.g.cs
+C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Home.baml

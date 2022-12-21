@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a8Naj9kNhtaujQIqVko4ABrk3RNRHcwwVyiLOAJx/VqwmdcTnlIlmxt4vw6n/xVvq34f/qC0oJcjyUXV9ljKPw==",
+  "dgSpecHash": "94bEf2tbUcUwh/h2hmtEEnMKbOqzz/eQmca5l0v4iaVTM8j2l+S3Hy4eLIFOHMuuj+WwJwQpx4w4RaybBNrGfA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Pedagogus\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Pedagogus\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
-    "C:\\Users\\Pedagogus\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
-    "C:\\Users\\Pedagogus\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
-    "C:\\Users\\Pedagogus\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

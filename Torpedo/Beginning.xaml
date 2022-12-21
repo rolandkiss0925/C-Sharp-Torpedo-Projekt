@@ -1,0 +1,21 @@
+﻿<Page x:Class="Torpedo.Beginning"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Torpedo"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Beginning">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Button Content="Player1 vs. Player2" Click="OnPlayer1vsPlayer2" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="0" Margin="0,45,0,0"/>
+        <Button Content="Player vs. Computer" Click="OnPlayervsComputer" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Margin="0,45,0,0"/>
+        <Button Content="Scores" Click="OnScores" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2"/>
+    </Grid>
+</Page>
