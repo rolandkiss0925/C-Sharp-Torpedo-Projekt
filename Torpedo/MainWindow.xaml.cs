@@ -269,6 +269,12 @@ namespace Torpedo
             SwitchPlayers(player1, player2);
             RedrawPlayers(player1, player2);
         }
+        private void PassTurn_Click(object sender, RoutedEventArgs e)
+        {
+            OwnCanvas.Visibility = Visibility.Hidden;
+            EnemyCanvas.Visibility = Visibility.Hidden;
+            RemainingCanvas.Visibility = Visibility.Hidden;
+        }
 
     }
 }
