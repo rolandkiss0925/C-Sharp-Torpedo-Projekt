@@ -26,8 +26,10 @@ namespace Torpedo
         private const int _gameWidth = 10;
         private const int _gameHeight = 10;
 
-        Brush _neonGreen = new SolidColorBrush(Color.FromRgb(161, 239, 140));
-        Brush _lightGreen = new SolidColorBrush(Color.FromRgb(63, 172, 149));
+        Brush _greenLight = new SolidColorBrush(Color.FromRgb(161, 239, 140));
+        Brush _green = new SolidColorBrush(Color.FromRgb(63, 172, 149));
+        Brush _blue = new SolidColorBrush(Color.FromRgb(68, 97, 118));
+        Brush _blueDark = new SolidColorBrush(Color.FromRgb(44, 33, 55));
 
         //Ideiglenes
         Player player1 = new Player("", null);
@@ -136,7 +138,7 @@ namespace Torpedo
                 {
                     if (i==0)
                     {
-                        DrawSingleSegment(s.Segments[i], _lightGreen, canvas);
+                        DrawSingleSegment(s.Segments[i], _greenLight, canvas);
                     }
                     else
                     {
@@ -243,7 +245,7 @@ namespace Torpedo
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            GenerateShips(player1, _neonGreen);
+            GenerateShips(player1, _greenLightest);
         }
 
     }

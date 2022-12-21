@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gerix\\source\\repos\\Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj": {}
+    "C:\\VS_Projects\\NI_Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gerix\\source\\repos\\Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj": {
+    "C:\\VS_Projects\\NI_Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gerix\\source\\repos\\Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+        "projectUniqueName": "C:\\VS_Projects\\NI_Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
         "projectName": "Torpedo",
-        "projectPath": "C:\\Users\\gerix\\source\\repos\\Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+        "projectPath": "C:\\VS_Projects\\NI_Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
         "packagesPath": "C:\\Users\\gerix\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gerix\\source\\repos\\Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\",
+        "outputPath": "C:\\VS_Projects\\NI_Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gerix\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -57,7 +57,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

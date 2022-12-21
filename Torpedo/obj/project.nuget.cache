@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UlGJ+WyMR+WSVfL+OJarPmXpYSc89yk2OwhuyfByRL7V7qubzNlvUzpvuSlMHy0q1qIkuV9ElQIDdDFsDhQQww==",
+  "dgSpecHash": "PewT7NUM0+k+7poa8H9DNAoCjHDs3KB9gfZGo8dkT6YiVF3tHAGW2bbfji3Fx89HNFwTLrUgx4KfZ5j3wkPlLQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\gerix\\source\\repos\\Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+  "projectFilePath": "C:\\VS_Projects\\NI_Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
