@@ -66,3 +66,5 @@ C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Playe
 C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Player1vsPlayer2.baml
 C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Scores.g.cs
 C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Scores.baml
+C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\PlayervsComputer.g.cs
+C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\PlayervsComputer.baml
