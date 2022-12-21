@@ -35,7 +35,7 @@ namespace Torpedo
 
         private void OnScores(object sender, RoutedEventArgs e)
         {
-            
+            this.NavigationService.Navigate(new Scores());
         }
     }
 }

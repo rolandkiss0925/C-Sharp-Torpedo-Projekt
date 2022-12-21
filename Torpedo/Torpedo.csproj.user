@@ -16,6 +16,9 @@
     <Compile Update="Player1vsPlayer2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Scores.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Beginning.xaml">
@@ -28,6 +31,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Player1vsPlayer2.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Scores.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
