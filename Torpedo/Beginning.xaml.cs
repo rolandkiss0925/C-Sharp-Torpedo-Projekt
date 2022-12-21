@@ -30,7 +30,7 @@ namespace Torpedo
 
         private void OnPlayervsComputer(object sender, RoutedEventArgs e)
         {
-            
+            this.NavigationService.Navigate(new PlayervsComputer());
         }
 
         private void OnScores(object sender, RoutedEventArgs e)
