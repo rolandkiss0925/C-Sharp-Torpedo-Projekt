@@ -83,7 +83,7 @@ namespace Torpedo
                     //MessageBox.Show("Starting position duplicate OR no free space");
                 }
             }
-            DrawShip(player.Canvas, player.ShipList.ToArray());
+            //DrawShip(player.Canvas, player.ShipList.ToArray());
             return resultList;
         }
 
@@ -146,11 +146,10 @@ namespace Torpedo
             //DrawSingleSegment(ship.StartSegment, /*ship.Color*/ Brushes.Black);
         }
 
-        ////0: Bal, 1: Fel, 2: Jobb, 3: Le, -1: Nincs szabad
         private int FreeDirectionChooser(int shipSize, Vector position, Player owner)
         {
+            ////0: Bal, 1: Fel, 2: Jobb, 3: Le, -1: Nincs szabad
             Random rnd = new Random();
-            //0: Bal, 1: Fel, 2: Jobb, 3: Le
             int randDir = rnd.Next(0, 4);
             int iteration = 1;
             while (!IsDirectionClear(shipSize, position, randDir, owner) && iteration != 4)
@@ -233,14 +232,42 @@ namespace Torpedo
             owner.RemoveAllShip();
         }
 
+        private void SwitchPlayers(Player p1, Player p2)
+        {
+            Canvas tmpCanvas = p1.Canvas;
+            p1.Canvas = p2.Canvas;
+            p2.Canvas = tmpCanvas;
+        }
+
+        private void RedrawPlayers(params Player[] player)
+        {
+            foreach (var p in player)
+            {
+                p.Canvas.Children.Clear();
+            }
+            foreach (var p in player)
+            {
+                DrawShip(p.Canvas, p.ShipList.ToArray());
+            }
+
+        }
+
         private void GenerateP1_Click(object sender, RoutedEventArgs e)
         {
             GenerateShips(player1, _greenLight);
+            DrawShip(player1.Canvas, player1.ShipList.ToArray());
         }
 
         private void GenerateP2_Click(object sender, RoutedEventArgs e)
         {
             GenerateShips(player2, _green);
+            DrawShip(player2.Canvas, player2.ShipList.ToArray());
+        }
+
+        private void SwitchP_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchPlayers(player1, player2);
+            RedrawPlayers(player1, player2);
         }
 
     }
