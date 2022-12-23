@@ -12,6 +12,7 @@ namespace Torpedo.Models
         public Vector StartSegment { get; }
         public Brush Color { get; set; }
         public Player Owner { get; set; }
+        public List<Vector> HitSegments { get; set; }
         public Ship(Vector start, List<Vector> segments, Brush brush, Player owner)
         {
             this.Segments = segments;
@@ -21,6 +22,10 @@ namespace Torpedo.Models
             this.Owner = owner;
         }
 
+        public void Hit(Vector segment)
+        {
+            HitSegments.Add(segment);
+        }
 
     }
 }
