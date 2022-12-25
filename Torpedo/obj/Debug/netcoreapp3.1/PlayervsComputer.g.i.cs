@@ -53,7 +53,7 @@ namespace Torpedo {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Torpedo;component/playervscomputer.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Torpedo;V1.0.0.0;component/playervscomputer.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\PlayervsComputer.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

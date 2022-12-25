@@ -9,18 +9,24 @@ namespace Torpedo.Models
     {
         public string Name { get; set; }
         public int Score { get; set; }
+        public int Hits { get; set; }
+        public bool MyTurn { get; set; }
         public List<Ship> ShipList { get; set; }
         public Canvas Canvas { get; set; }
         public List<Vector> AllShipSegments { get; set; }
+        public List<Vector> ShotSegments { get; set; }
 
 
         public Player(string name, Canvas canvas)
         {
             this.Name = name;
             this.Canvas = canvas;
+            this.Hits = 0;
+            this.MyTurn = false;
             this.ShipList = new List<Ship>();
             this.Score = 0;
             this.AllShipSegments = new List<Vector>();
+            this.ShotSegments = new List<Vector>();
         }
 
         public void AddShip(params Ship[] ships)
@@ -43,6 +49,12 @@ namespace Torpedo.Models
             this.ShipList.Clear();
 
             return returnList;
+        }
+
+        public int AddHit()
+        {
+            this.Hits++;
+            return Hits;
         }
     }
 
