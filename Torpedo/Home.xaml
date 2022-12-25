@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="TorpedoGame" Height="450" Width="800"
         WindowStartupLocation ="CenterScreen">
-    <Grid>
+    <Grid Background="#2c2137">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1.5*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="TORPEDO GAME" FontSize="32"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
+        <Label Foreground="#446176" Content="TORPEDO GAME" FontSize="56"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
 
         <Frame x:Name="Main" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>

@@ -14,8 +14,8 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Button Content="Player1 vs. Player2" Click="OnPlayer1vsPlayer2" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="0" Margin="0,45,0,0"/>
-        <Button Content="Player vs. Computer" Click="OnPlayervsComputer" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Margin="0,45,0,0"/>
-        <Button Content="Scores" Click="OnScores" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Button Content="Player1 vs. Player2" Click="OnPlayer1vsPlayer2" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="0" Width="120" Height="32" Padding="0" Margin="5,45,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+        <Button Content="Player vs. Computer" Click="OnPlayervsComputer" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Width="120" Height="32" Padding="0" Margin="5,45,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+        <Button Content="Scores" Click="OnScores" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Width="120" Height="32" Padding="0" Margin="5,45,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
     </Grid>
 </Page>
