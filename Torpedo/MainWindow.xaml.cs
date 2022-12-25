@@ -38,9 +38,11 @@ namespace Torpedo
         public MainWindow()
         {
             InitializeComponent();
-
+            RandomStarter();
             //---------Player 1 próba--------
-            player1 = new Player("Player 1", OwnCanvas);
+            
+
+            UpdateScoreboard(GetCurrentPlayer());
 
             //Ship ship1 = MakeShip(3, (new Vector(0, 0)), _neonGreen, player1);
             //Ship ship2 = MakeShip(2, (new Vector(2, 4)), _neonGreen, player1);
@@ -51,7 +53,7 @@ namespace Torpedo
             //-------------------------------
 
             //---------Player 2 próba--------
-            player2 = new Player("Player 2", EnemyCanvas);
+
             /*
             Ship ship11 = MakeShip(2, (new Vector(0, 0)), _lightGreen, player2);
             Ship ship22 = MakeShip(3, (new Vector(2, 2)), _lightGreen, player2);
@@ -63,17 +65,13 @@ namespace Torpedo
             //-------------------------------
 
             turnCounter = 0;
+            
 
-            //Choose random starter player
-            RandomStarter();
+            GenerateShips(player1, _blue);
+            GenerateShips(player2, _greenLight); 
 
-            UpdateScoreboard(GetCurrentPlayer());
-
-            GenerateShips(player1, _greenLight);
-            GenerateShips(player2, _greenLight);
-
-            DrawShip(OwnCanvas, player1.ShipList.ToArray());
-            DrawShip(EnemyCanvas, player2.ShipList.ToArray());
+            DrawShip(player1.Canvas, player1.ShipList.ToArray());
+            DrawShip(player2.Canvas, player2.ShipList.ToArray());
         }
 
         private List<Ship> GenerateShips(Player player, Brush color)
@@ -244,45 +242,33 @@ namespace Torpedo
             owner.RemoveAllShip();
         }
 
-        private void SwitchPlayers()
+        private void SwitchPlayerCanvas()
         {
             Canvas tmpCanvas = player1.Canvas;
             player1.Canvas = player2.Canvas;
             player2.Canvas = tmpCanvas;
 
-            if (player1.MyTurn)
-            {
-                player1.MyTurn = false;
-            }
-            else
-            {
-                player1.MyTurn = true;
-            }
-            if (player2.MyTurn)
-            {
-                player2.MyTurn = false;
-            }
-            else
-            {
-                player2.MyTurn = true;
-            }
         }
 
         private Player GetCurrentPlayer()
         {
-            if (player1.MyTurn == true)
+            if (player1.Canvas.Name == OwnCanvas.Name)
             {
+                MessageBox.Show("Current: P1 \nplayer1.Canvas.Name = OwnCanvas.Name");
                 return player1;
             }
+            MessageBox.Show("!Current: \nplayer1.Canvas.Name != OwnCanvas.Name");
             return player2;
         }
         private Player GetEnemyPlayer()
         {
-            if (player2.MyTurn == true)
+            if (player2.Canvas.Name == EnemyCanvas.Name)
             {
-                return player1;
+                MessageBox.Show("Enemy: P2 \nplayer2.Canvas.Name = EnemyCanvas.Name");
+                return player2;
             }
-            return player2;
+            MessageBox.Show("Enemy: P1 \nplayer2.Canvas.Name != EnemyCanvas.Name");
+            return player1;
         }
 
         private void RedrawPlayers(params Player[] player)
@@ -299,15 +285,20 @@ namespace Torpedo
         }
         private void RandomStarter()
         {
-            if (RandomPlayer(player1, player2).Name == player1.Name)
+            Random r = new Random();
+            int rInt = r.Next(0, 2);
+            
+            if (rInt == 0)
             {
-                player1.MyTurn = true;
-                player2.MyTurn = false;
+                player1 = new Player("Player 1", OwnCanvas);
+                player2 = new Player("Player 2", EnemyCanvas);
+                MessageBox.Show("Player 1 set to OWNCANVAS");
             }
-            else
+            else if (rInt == 1)
             {
-                player1.MyTurn = false;
-                player2.MyTurn = true;
+                player1 = new Player("Player 1", EnemyCanvas);
+                player2 = new Player("Player 2", OwnCanvas);
+                MessageBox.Show("Player 1 set to ENEMY");
             }
         }
         private Player PassTurn()
@@ -320,21 +311,13 @@ namespace Torpedo
             EnemyCanvas.Visibility = Visibility.Visible;
             RemainingCanvas.Visibility = Visibility.Visible;
 
-            SwitchPlayers();
+            SwitchPlayerCanvas();
             RedrawPlayers(player1, player2);
             turnCounter++;
 
             UpdateScoreboard(GetCurrentPlayer());
             return GetCurrentPlayer();
         }
-
-        private Player RandomPlayer(params Player[] players)
-        {
-            Random r = new Random();
-            int rInt = r.Next(0, players.Length);
-            return players[rInt];
-        }
-
         private void UpdateScoreboard(Player player)
         {
             CurrentPlayerNameTextBlock.Text = player.Name;
@@ -344,7 +327,7 @@ namespace Torpedo
 
         private bool Action(Vector shotSegment)
         {
-            if (GetEnemyPlayer().AllShipSegments.Contains(shotSegment) && !GetEnemyPlayer().ShotSegments.Contains(shotSegment))
+            if (GetEnemyPlayer().AllShipSegments.Contains(shotSegment) /*&& !GetEnemyPlayer().ShotSegments.Contains(shotSegment)*/)
             {
                 return true;
             }
@@ -385,7 +368,7 @@ namespace Torpedo
 
         private void SwitchP_Click(object sender, RoutedEventArgs e)
         {
-            SwitchPlayers();
+            SwitchPlayerCanvas();
             RedrawPlayers(player1, player2);
         }
         private void PassTurn_Click(object sender, RoutedEventArgs e)

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gerix\\source\\repos\\Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+      "projectUniqueName": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
       "projectName": "Torpedo",
-      "projectPath": "C:\\Users\\gerix\\source\\repos\\Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+      "projectPath": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
       "packagesPath": "C:\\Users\\gerix\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gerix\\source\\repos\\Torpedo\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\",
+      "outputPath": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\gerix\\AppData\\Roaming\\NuGet\\NuGet.Config",

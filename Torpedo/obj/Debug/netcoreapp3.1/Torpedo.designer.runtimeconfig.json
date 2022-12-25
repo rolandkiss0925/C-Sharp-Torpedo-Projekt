@@ -6,11 +6,7 @@
       "version": "3.1.0"
     },
     "additionalProbingPaths": [
-<<<<<<< HEAD
-      "C:\\Users\\Pedagogus\\.dotnet\\store\\|arch|\\|tfm|",
-=======
       "C:\\Users\\gerix\\.dotnet\\store\\|arch|\\|tfm|",
->>>>>>> origin
       "C:\\Users\\gerix\\.nuget\\packages"
     ],
     "configProperties": {
