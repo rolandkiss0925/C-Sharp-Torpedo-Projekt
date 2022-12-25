@@ -13,12 +13,15 @@
         <StackPanel Background="#446176">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Turn: " TextWrapping="Wrap" Margin="5"/>
+                <TextBlock Name="TurnTextBlock"  TextWrapping="Wrap" Margin="5"/>
                 <TextBlock Text="Hits: " TextWrapping="Wrap" Margin="5"/>
-                <TextBlock Text="Enemy Hits: " TextWrapping="Wrap" Margin="5"/>
+                <TextBlock Name="HitsTextBlock"  TextWrapping="Wrap" Margin="5"/>
+                <TextBlock Text="Current Player: " TextWrapping="Wrap" Margin="10 5 10 5"/>
+                <TextBlock Name="CurrentPlayerNameTextBlock"  TextWrapping="Wrap" Margin="5"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Canvas Name="EnemyCanvas" Height="300" Width="300" Margin="16 16 8 16">
+            <Canvas Name="EnemyCanvas" MouseLeftButtonDown="EnemyCanvas_MouseLeftButtonDown" Height="300" Width="300" Margin="16 16 8 16">
                 <Canvas.Background>
                     <DrawingBrush TileMode="Tile" Viewport="0,0,30,30" ViewportUnits="Absolute">
                         <DrawingBrush.Drawing>
@@ -68,7 +71,10 @@
             </Canvas>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Generate" Click="Generate_Click"  Width="60" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+            <Button Content="Generate P2" Click="GenerateP2_Click"  Width="72" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+            <Button Content="Generate P1" Click="GenerateP1_Click"  Width="72" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+            <Button Content="Switch players" Click="SwitchP_Click"  Width="80" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+            <Button Content="Pass Turn" Click="PassTurn_Click"  Width="80" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
         </StackPanel>
 
     </StackPanel>

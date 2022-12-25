@@ -18,35 +18,29 @@ using Player = Torpedo.Models.Player;
 
 namespace Torpedo
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         private const int _gameWidth = 10;
         private const int _gameHeight = 10;
 
-        Brush _neonGreen = new SolidColorBrush(Color.FromRgb(161, 239, 140));
-        Brush _lightGreen = new SolidColorBrush(Color.FromRgb(63, 172, 149));
+        Brush _greenLight = new SolidColorBrush(Color.FromRgb(161, 239, 140));
+        Brush _green = new SolidColorBrush(Color.FromRgb(63, 172, 149));
+        Brush _blue = new SolidColorBrush(Color.FromRgb(68, 97, 118));
+        Brush _blueDark = new SolidColorBrush(Color.FromRgb(44, 33, 55));
+      
+        int turnCounter;
 
         //Ideiglenes
         Player player1 = new Player("", null);
         Player player2 = new Player("", null);
-
-        //Lehet nem szukseges
-        IDictionary<string, int> ShipType = new Dictionary<string, int>() {
-            {"CARRIER_5", 5 },
-            {"BATTLESHIP_4", 4 },
-            {"SUBMARINE_3", 3 },
-            {"DESTROYER_2", 2 }, //2x
-        };
 
         public MainWindow()
         {
             InitializeComponent();
 
             //---------Player 1 próba--------
-            player1 = new Player("Orban V. Iktor", OwnCanvas);
+            player1 = new Player("Player 1", OwnCanvas);
 
             //Ship ship1 = MakeShip(3, (new Vector(0, 0)), _neonGreen, player1);
             //Ship ship2 = MakeShip(2, (new Vector(2, 4)), _neonGreen, player1);
@@ -57,7 +51,7 @@ namespace Torpedo
             //-------------------------------
 
             //---------Player 2 próba--------
-            player2 = new Player("Milyen Feri?", EnemyCanvas);
+            player2 = new Player("Player 2", EnemyCanvas);
             /*
             Ship ship11 = MakeShip(2, (new Vector(0, 0)), _lightGreen, player2);
             Ship ship22 = MakeShip(3, (new Vector(2, 2)), _lightGreen, player2);
@@ -68,8 +62,18 @@ namespace Torpedo
             //player2.AddShip(ship11, ship22, ship33, ship44, ship55);
             //-------------------------------
 
-            //DrawShip(OwnCanvas, player1.ShipList.ToArray());
-            //DrawShip(EnemyCanvas, player2.ShipList.ToArray());
+            turnCounter = 0;
+
+            //Choose random starter player
+            RandomStarter();
+
+            UpdateScoreboard(GetCurrentPlayer());
+
+            GenerateShips(player1, _greenLight);
+            GenerateShips(player2, _greenLight);
+
+            DrawShip(OwnCanvas, player1.ShipList.ToArray());
+            DrawShip(EnemyCanvas, player2.ShipList.ToArray());
         }
 
         private List<Ship> GenerateShips(Player player, Brush color)
@@ -91,7 +95,7 @@ namespace Torpedo
                     //MessageBox.Show("Starting position duplicate OR no free space");
                 }
             }
-            DrawShip(player.Canvas, player.ShipList.ToArray());
+            //DrawShip(player.Canvas, player.ShipList.ToArray());
             return resultList;
         }
 
@@ -117,7 +121,7 @@ namespace Torpedo
             segments.Add(startPosition);
 
             var directionVector = SetDirectionVector(randomFreeDirection);
-            for (int i = 0; i < shipSize-1; i++)
+            for (int i = 0; i < shipSize - 1; i++)
             {
                 startPosition += directionVector;
                 segments.Add(startPosition);
@@ -132,33 +136,32 @@ namespace Torpedo
         {
             foreach (var s in ships)
             {
-                for (int i = 0; i < s.Segments.Count; i++)
+                //Hajo kezdopontjat mas szinnel kirajzol
+                /*for (int i = 0; i < s.Segments.Count; i++)
                 {
-                    if (i==0)
+                    if (i == 0)
                     {
-                        DrawSingleSegment(s.Segments[i], _lightGreen, canvas);
+                        DrawSingleSegment(s.Segments[i], _green, canvas);
                     }
                     else
                     {
                         DrawSingleSegment(s.Segments[i], s.Color, canvas);
                     }
-                }
-                //TODO cserelni vissza a kirajzolast
-                /*foreach (var segment in s.Segments)
+                }*/
+                foreach (var segment in s.Segments)
                 {
                     DrawSingleSegment(segment, s.Color, canvas);
-                }*/
+                }
             }
-            
+
             //1. Szegmens
             //DrawSingleSegment(ship.StartSegment, /*ship.Color*/ Brushes.Black);
         }
 
-        ////0: Bal, 1: Fel, 2: Jobb, 3: Le, -1: Nincs szabad
         private int FreeDirectionChooser(int shipSize, Vector position, Player owner)
         {
+            ////0: Bal, 1: Fel, 2: Jobb, 3: Le, -1: Nincs szabad
             Random rnd = new Random();
-            //0: Bal, 1: Fel, 2: Jobb, 3: Le
             int randDir = rnd.Next(0, 4);
             int iteration = 1;
             while (!IsDirectionClear(shipSize, position, randDir, owner) && iteration != 4)
@@ -183,7 +186,7 @@ namespace Torpedo
         private bool IsDirectionClear(int shipSize, Vector position, int direction, Player owner)
         {
             var directionVector = SetDirectionVector(direction);
-            for (int i = 0; i < shipSize-1; i++)
+            for (int i = 0; i < shipSize - 1; i++)
             {
                 position += directionVector;
                 //Ha foglalt a position, vagy kiesne a pályáról
@@ -230,7 +233,7 @@ namespace Torpedo
             //Szegmens poz.
             Canvas.SetTop(shape, unitY * position.Y);
             Canvas.SetLeft(shape, unitX * position.X);
-           
+
             //Szegmens hozzaadas/kirajzolas
             canvas.Children.Add(shape);
         }
@@ -241,10 +244,158 @@ namespace Torpedo
             owner.RemoveAllShip();
         }
 
-        private void Generate_Click(object sender, RoutedEventArgs e)
+        private void SwitchPlayers()
         {
-            GenerateShips(player1, _neonGreen);
+            Canvas tmpCanvas = player1.Canvas;
+            player1.Canvas = player2.Canvas;
+            player2.Canvas = tmpCanvas;
+
+            if (player1.MyTurn)
+            {
+                player1.MyTurn = false;
+            }
+            else
+            {
+                player1.MyTurn = true;
+            }
+            if (player2.MyTurn)
+            {
+                player2.MyTurn = false;
+            }
+            else
+            {
+                player2.MyTurn = true;
+            }
         }
 
+        private Player GetCurrentPlayer()
+        {
+            if (player1.MyTurn == true)
+            {
+                return player1;
+            }
+            return player2;
+        }
+        private Player GetEnemyPlayer()
+        {
+            if (player2.MyTurn == true)
+            {
+                return player1;
+            }
+            return player2;
+        }
+
+        private void RedrawPlayers(params Player[] player)
+        {
+            foreach (var p in player)
+            {
+                p.Canvas.Children.Clear();
+            }
+            foreach (var p in player)
+            {
+                DrawShip(p.Canvas, p.ShipList.ToArray());
+            }
+
+        }
+        private void RandomStarter()
+        {
+            if (RandomPlayer(player1, player2).Name == player1.Name)
+            {
+                player1.MyTurn = true;
+                player2.MyTurn = false;
+            }
+            else
+            {
+                player1.MyTurn = false;
+                player2.MyTurn = true;
+            }
+        }
+        private Player PassTurn()
+        {
+            OwnCanvas.Visibility = Visibility.Hidden;
+            EnemyCanvas.Visibility = Visibility.Hidden;
+            RemainingCanvas.Visibility = Visibility.Hidden;
+            MessageBox.Show("Are you ready?", "End of turn", MessageBoxButton.OK, MessageBoxImage.None);
+            OwnCanvas.Visibility = Visibility.Visible;
+            EnemyCanvas.Visibility = Visibility.Visible;
+            RemainingCanvas.Visibility = Visibility.Visible;
+
+            SwitchPlayers();
+            RedrawPlayers(player1, player2);
+            turnCounter++;
+
+            UpdateScoreboard(GetCurrentPlayer());
+            return GetCurrentPlayer();
+        }
+
+        private Player RandomPlayer(params Player[] players)
+        {
+            Random r = new Random();
+            int rInt = r.Next(0, players.Length);
+            return players[rInt];
+        }
+
+        private void UpdateScoreboard(Player player)
+        {
+            CurrentPlayerNameTextBlock.Text = player.Name;
+            TurnTextBlock.Text = turnCounter.ToString();
+            HitsTextBlock.Text = player.Hits.ToString();
+        }
+
+        private bool Action(Vector shotSegment)
+        {
+            if (GetEnemyPlayer().AllShipSegments.Contains(shotSegment) && !GetEnemyPlayer().ShotSegments.Contains(shotSegment))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool TakeAction()
+        {
+            Point p = Mouse.GetPosition(EnemyCanvas);
+            Vector targetVector = new Vector(Convert.ToInt32(Math.Floor((p.X / _gameWidth / 3))), Convert.ToInt32(Math.Floor((p.Y / _gameHeight / 3))));
+            string posString = "X: " + targetVector.X.ToString() + " Y: " + targetVector.Y.ToString();
+            if (Action(targetVector))
+            {
+                posString += " HIT!";
+                MessageBox.Show(posString);
+                return true;
+            }
+            else
+            {
+                posString += " MISS!";
+                MessageBox.Show(posString);
+                return false;
+            }
+            
+        }
+
+        private void GenerateP1_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateShips(player1, _greenLight);
+            DrawShip(player1.Canvas, player1.ShipList.ToArray());
+        }
+
+        private void GenerateP2_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateShips(player2, _green);
+            DrawShip(player2.Canvas, player2.ShipList.ToArray());
+        }
+
+        private void SwitchP_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchPlayers();
+            RedrawPlayers(player1, player2);
+        }
+        private void PassTurn_Click(object sender, RoutedEventArgs e)
+        {
+            PassTurn();
+        }
+
+        private void EnemyCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TakeAction();
+        }
     }
 }

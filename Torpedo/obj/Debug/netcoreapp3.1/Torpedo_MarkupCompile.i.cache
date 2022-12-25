@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\App.xaml
-11407045341
+6767482291
 
-8-615427462
+13-958788441
 192-1533232326
-MainWindow.xaml;
+Beginning.xaml;Home.xaml;MainWindow.xaml;Player1vsPlayer2.xaml;PlayervsComputer.xaml;Scores.xaml;
 
-True
+False
 
