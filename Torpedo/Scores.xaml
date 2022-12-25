@@ -9,6 +9,29 @@
       Title="Scores">
 
     <Grid>
-        <Button Content="Cancel" Click="OnCancel"  HorizontalAlignment="Center"  VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Foreground="#446176" Content="Scores:" FontSize="16" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0"/>
+
+        <DataGrid Grid.Row="1" Background="#2c2137" Foreground="#446176" VerticalGridLinesBrush="#446176" HorizontalGridLinesBrush="#446176" Margin="20,0,20,0">
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#446176" />
+                    <Setter Property="Foreground" Value="#2c2137" />
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" IsReadOnly="True" Width="1*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Rounds" IsReadOnly="True" Width="1*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Player's hits" IsReadOnly="True" Width="1*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Winner" IsReadOnly="True" Width="1*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <Button Content="Cancel" Click="OnCancel" Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="120" Height="32" Padding="0" Margin="50,0,0,35" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
     </Grid>
 </Page>

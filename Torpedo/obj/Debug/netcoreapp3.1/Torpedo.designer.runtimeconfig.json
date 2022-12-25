@@ -6,12 +6,8 @@
       "version": "3.1.0"
     },
     "additionalProbingPaths": [
-<<<<<<< HEAD
       "C:\\Users\\Pedagogus\\.dotnet\\store\\|arch|\\|tfm|",
-=======
-      "C:\\Users\\gerix\\.dotnet\\store\\|arch|\\|tfm|",
->>>>>>> origin
-      "C:\\Users\\gerix\\.nuget\\packages"
+      "C:\\Users\\Pedagogus\\.nuget\\packages"
     ],
     "configProperties": {
       "Microsoft.NETCore.DotNetHostPolicy.SetAppPaths": true
