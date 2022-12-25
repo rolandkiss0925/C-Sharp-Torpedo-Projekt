@@ -1,3 +1,7 @@
 is_global = true
 build_property.RootNamespace = Torpedo
+<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\gerix\source\repos\Torpedo_Git\C-Sharp-Torpedo-Projekt\Torpedo\
+=======
+build_property.ProjectDir = C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\
+>>>>>>> origin/Greta

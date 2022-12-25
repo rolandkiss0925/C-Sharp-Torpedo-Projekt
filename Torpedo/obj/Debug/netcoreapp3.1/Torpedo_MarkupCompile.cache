@@ -4,12 +4,20 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\Users\gerix\source\repos\Torpedo_Git\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\
+=======
+C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\
+>>>>>>> origin/Greta
 Torpedo
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
+<<<<<<< HEAD
 C:\Users\gerix\source\repos\Torpedo_Git\C-Sharp-Torpedo-Projekt\Torpedo\App.xaml
+=======
+C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\App.xaml
+>>>>>>> origin/Greta
 6767482291
 
 11-752931163

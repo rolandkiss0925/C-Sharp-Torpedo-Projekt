@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "IzGe5BhxB7ldEAGOkgxz4w1DXbezvSCguK7JquxfPFaK3+XORnkxcwnRXO+tMuihrGnMgUUAU/SyLe3hB2iI8w==",
   "success": true,
   "projectFilePath": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+=======
+  "dgSpecHash": "94bEf2tbUcUwh/h2hmtEEnMKbOqzz/eQmca5l0v4iaVTM8j2l+S3Hy4eLIFOHMuuj+WwJwQpx4w4RaybBNrGfA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Pedagogus\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+>>>>>>> origin/Greta
   "expectedPackageFiles": [],
   "logs": []
 }
