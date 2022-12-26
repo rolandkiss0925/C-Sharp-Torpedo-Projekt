@@ -13,19 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+      "projectUniqueName": "C:\\Users\\Pedagogus\\NI\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
       "projectName": "Torpedo",
-      "projectPath": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
-      "packagesPath": "C:\\Users\\gerix\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\Pedagogus\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
-      "projectName": "Torpedo",
-      "projectPath": "C:\\Users\\Pedagogus\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+      "projectPath": "C:\\Users\\Pedagogus\\NI\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
       "packagesPath": "C:\\Users\\Pedagogus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Pedagogus\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\",
->>>>>>> origin/Greta
+      "outputPath": "C:\\Users\\Pedagogus\\NI\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Pedagogus\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -75,5 +67,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Pedagogus\\NI\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
