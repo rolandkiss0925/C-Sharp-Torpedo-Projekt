@@ -1,14 +1,15 @@
 {
   "version": 2,
-<<<<<<< HEAD
-  "dgSpecHash": "IzGe5BhxB7ldEAGOkgxz4w1DXbezvSCguK7JquxfPFaK3+XORnkxcwnRXO+tMuihrGnMgUUAU/SyLe3hB2iI8w==",
+  "dgSpecHash": "3W5EAkcH4/HqKtaSM5rmoGJoyUjtU0S/8D4tXO650f3C+yBouH+BbTMqsL3QHCl0+iNMTvfiuDyi1gAToYejYw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
-=======
-  "dgSpecHash": "94bEf2tbUcUwh/h2hmtEEnMKbOqzz/eQmca5l0v4iaVTM8j2l+S3Hy4eLIFOHMuuj+WwJwQpx4w4RaybBNrGfA==",
-  "success": true,
-  "projectFilePath": "C:\\Users\\Pedagogus\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
->>>>>>> origin/Greta
+  "projectFilePath": "C:\\Users\\Pedagogus\\NI\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Pedagogus\\NI\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
