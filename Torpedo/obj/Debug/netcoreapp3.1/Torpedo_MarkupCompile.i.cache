@@ -4,25 +4,17 @@
 winexe
 C#
 .cs
-<<<<<<< HEAD
-C:\Users\gerix\source\repos\Torpedo_Git\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\
-=======
-C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\
->>>>>>> origin/Greta
+C:\Users\Pedagogus\NI\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\
 Torpedo
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
-<<<<<<< HEAD
-C:\Users\gerix\source\repos\Torpedo_Git\C-Sharp-Torpedo-Projekt\Torpedo\App.xaml
-=======
-C:\Users\Pedagogus\C-Sharp-Torpedo-Projekt\Torpedo\App.xaml
->>>>>>> origin/Greta
+C:\Users\Pedagogus\NI\C-Sharp-Torpedo-Projekt\Torpedo\App.xaml
 6767482291
 
 13-958788441
 192-1533232326
 Beginning.xaml;Home.xaml;MainWindow.xaml;Player1vsPlayer2.xaml;PlayervsComputer.xaml;Scores.xaml;
 
-False
+True
 
