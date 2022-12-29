@@ -73,6 +73,7 @@ namespace Torpedo
 
             DrawShip(player1.Canvas, player1.ShipList.ToArray());
             DrawShip(player2.Canvas, player2.ShipList.ToArray());
+            DrawRemainingShips(GetCurrentPlayer(), RemainingCanvas);
         }
 
         private List<Ship> GenerateShips(Player player, Brush color)
@@ -83,7 +84,7 @@ namespace Torpedo
             Random r = new Random();
 
             //i<=5 -> 5 ships
-            for (int i = 2; i <= 5; i++)
+            for (int i = 5; i >= 2; i--)
             {
                 if (i == 2)
                 {
@@ -151,11 +152,11 @@ namespace Torpedo
                     if (ship.HitSegments.Contains(segment))
                     {
                         //If segment is already hit
-                        DrawSingleSegment(segment, _green, canvas);
+                        DrawSingleSegment(segment, _green, canvas, canvas);
                     }
                     else
                     {
-                        DrawSingleSegment(segment, ship.Color, canvas);
+                        DrawSingleSegment(segment, ship.Color, canvas, canvas);
                     }  
                 }
             }
@@ -227,13 +228,13 @@ namespace Torpedo
             return directionVector;
         }
 
-        private void DrawSingleSegment(Vector position, Brush brush, Canvas canvas)
+        private void DrawSingleSegment(Vector position, Brush brush, Canvas canvasForSize, Canvas canvasToDraw)
         {
             //Egy szegmens merete
             var shape = new Rectangle();
             shape.Fill = brush;
-            var unitX = canvas.Width / _gameWidth;
-            var unitY = canvas.Height / _gameHeight;
+            var unitX = canvasForSize.Width / _gameWidth;
+            var unitY = canvasForSize.Height / _gameHeight;
             shape.Width = unitX;
             shape.Height = unitY;
             //Szegmens poz.
@@ -241,7 +242,7 @@ namespace Torpedo
             Canvas.SetLeft(shape, unitX * position.X);
 
             //Szegmens hozzaadas/kirajzolas
-            canvas.Children.Add(shape);
+            canvasToDraw.Children.Add(shape);
         }
         private void DrawSingleMiss(Vector position, Brush brush, Canvas canvas)
         {
@@ -271,13 +272,45 @@ namespace Torpedo
                 DrawSingleMiss(pos, _tmpColor, EnemyCanvas);
             }
         }
-        private void DrawRemainingShips(Player player)
+        private void DrawRemainingShips(Player player, Canvas canvas)
         {
+            //DrawSingleSegment(new Vector(0, 0), _greenLight, OwnCanvas, RemainingCanvas);
+            //DrawSingleSegment(new Vector(1, 1), _greenLight, OwnCanvas, RemainingCanvas);
+            //DrawSingleSegment(new Vector(2, 1), _greenLight, OwnCanvas, RemainingCanvas);
+
+            Vector start = new Vector(0, 0);
+            Vector current = new Vector(0, 0);
+            Vector direction = new Vector(1, 0);
+            Vector stackingDirection = new Vector(0, 2);
+
             foreach (var ship in player.ShipList)
             {
-
+                for (int i = 0; i < ship.ShipLength; i++)
+                {
+                    DrawSingleSegment(current, _greenLight, OwnCanvas, RemainingCanvas);
+                    current += direction;
+                }
+                start += stackingDirection;
+                current = start;
             }
-            //DrawSingleSegment();
+
+            /*
+            for (int i = 5; i <= 1; i--)
+            {
+                for (int j = 1; j <= i; j++)
+                {                   
+                    if (i == 1)
+                    {
+                        DrawSingleSegment(current, _greenLight, OwnCanvas, RemainingCanvas);
+                        current += direction;
+                    }
+                    DrawSingleSegment(current, _greenLight, OwnCanvas, RemainingCanvas);
+                    current += direction;
+                }
+                start += stackingDirection;
+                current = start; 
+            }*/
+            
         }
         private void RemoveShipsFromCanvasAndPlayer(Player owner)
         {
