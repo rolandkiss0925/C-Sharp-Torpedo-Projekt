@@ -338,7 +338,7 @@ namespace Torpedo
         {
             CurrentPlayerNameTextBlock.Text = player.Name;
             TurnTextBlock.Text = turnCounter.ToString();
-            HitsTextBlock.Text = player.Hits.ToString();
+            HitsTextBlock.Text = player.NumOfHits.ToString();
         }
 
         private int Action(Vector shotSegment)
@@ -377,6 +377,7 @@ namespace Torpedo
                     //Hits
                     posString += " HIT!";
                     MessageBox.Show(posString);
+                    GetCurrentPlayer().GetsScore();
                     PassTurn();
                     return true;
                 case 2:

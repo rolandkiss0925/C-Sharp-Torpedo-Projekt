@@ -10,7 +10,7 @@ namespace Torpedo.Models
     {
         public string Name { get; set; }
         public int Score { get; set; }
-        public int Hits { get; set; }
+        public int NumOfHits { get; set; }
         public List<Ship> ShipList { get; set; }
         public Canvas Canvas { get; set; }
         public List<Vector> AllShipSegments { get; set; }
@@ -22,7 +22,7 @@ namespace Torpedo.Models
         {
             this.Name = name;
             this.Canvas = canvas;
-            this.Hits = 0;
+            this.NumOfHits = 0;
             //this.MyTurn = false;
             this.ShipList = new List<Ship>();
             this.Score = 0;
@@ -51,7 +51,6 @@ namespace Torpedo.Models
 
             return returnList;
         }
-
         public Ship GetShipBySegment(Vector segment)
         {
             foreach (var ship in this.ShipList)
@@ -62,6 +61,10 @@ namespace Torpedo.Models
                 }
             }
             return null;
+        }
+        public void GetsScore()
+        {
+            this.NumOfHits++;
         }
 
     }
