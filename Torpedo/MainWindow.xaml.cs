@@ -102,7 +102,6 @@ namespace Torpedo
             //null ha startposition foglalt
             if (owner.AllShipSegments.Contains(startPosition))
             {
-                //MessageBox.Show("Start dupe");
                 return null;
             }
 
@@ -254,20 +253,20 @@ namespace Torpedo
         {
             if (player1.Canvas.Name == OwnCanvas.Name)
             {
-                MessageBox.Show("Current: P1 \nplayer1.Canvas.Name = OwnCanvas.Name");
+                //MessageBox.Show("Current: P1 \nplayer1.Canvas.Name = OwnCanvas.Name");
                 return player1;
             }
-            MessageBox.Show("!Current: \nplayer1.Canvas.Name != OwnCanvas.Name");
+            //MessageBox.Show("!Current: \nplayer1.Canvas.Name != OwnCanvas.Name");
             return player2;
         }
         private Player GetEnemyPlayer()
         {
             if (player2.Canvas.Name == EnemyCanvas.Name)
             {
-                MessageBox.Show("Enemy: P2 \nplayer2.Canvas.Name = EnemyCanvas.Name");
+                //MessageBox.Show("Enemy: P2 \nplayer2.Canvas.Name = EnemyCanvas.Name");
                 return player2;
             }
-            MessageBox.Show("Enemy: P1 \nplayer2.Canvas.Name != EnemyCanvas.Name");
+            //MessageBox.Show("Enemy: P1 \nplayer2.Canvas.Name != EnemyCanvas.Name");
             return player1;
         }
 
@@ -330,7 +329,6 @@ namespace Torpedo
             if (GetEnemyPlayer().AllShipSegments.Contains(shotSegment) && !GetEnemyPlayer().AllHitShipSegments.Contains(shotSegment))
             {
                 GetEnemyPlayer().AllHitShipSegments.Add(shotSegment);
-                //TODO Valami null-t ad vissza
                 GetEnemyPlayer().GetShipBySegment(shotSegment).HitSegments.Add(shotSegment);
                 return true;
             }

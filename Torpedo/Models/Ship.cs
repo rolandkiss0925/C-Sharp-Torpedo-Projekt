@@ -20,6 +20,7 @@ namespace Torpedo.Models
             this.StartSegment = start;
             this.Color = brush;
             this.Owner = owner;
+            HitSegments = new List<Vector>();
         }
 
         public void Hit(Vector segment)
