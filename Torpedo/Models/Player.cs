@@ -13,7 +13,7 @@ namespace Torpedo.Models
         public List<Ship> ShipList { get; set; }
         public Canvas Canvas { get; set; }
         public List<Vector> AllShipSegments { get; set; }
-        public List<Vector> ShotSegments { get; set; }
+        public List<Vector> AllHitShipSegments { get; set; }
 
 
         public Player(string name, Canvas canvas)
@@ -25,7 +25,7 @@ namespace Torpedo.Models
             this.ShipList = new List<Ship>();
             this.Score = 0;
             this.AllShipSegments = new List<Vector>();
-            this.ShotSegments = new List<Vector>();
+            this.AllHitShipSegments = new List<Vector>();
         }
 
         public void AddShip(params Ship[] ships)
@@ -39,7 +39,6 @@ namespace Torpedo.Models
                 }
             }
         }
-
         public List<Ship> RemoveAllShip()
         {
             List<Ship> returnList = this.ShipList;
@@ -50,11 +49,18 @@ namespace Torpedo.Models
             return returnList;
         }
 
-        public int AddHit()
+        public Ship GetShipBySegment(Vector segment)
         {
-            this.Hits++;
-            return Hits;
+            foreach (var ship in this.ShipList)
+            {
+                if (ship.Segments.Contains(segment))
+                {
+                    return ship;
+                }
+            }
+            return null;
         }
+
     }
 
 }

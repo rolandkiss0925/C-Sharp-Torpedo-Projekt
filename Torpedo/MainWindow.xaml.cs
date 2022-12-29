@@ -327,8 +327,11 @@ namespace Torpedo
 
         private bool Action(Vector shotSegment)
         {
-            if (GetEnemyPlayer().AllShipSegments.Contains(shotSegment) /*&& !GetEnemyPlayer().ShotSegments.Contains(shotSegment)*/)
+            if (GetEnemyPlayer().AllShipSegments.Contains(shotSegment) && !GetEnemyPlayer().AllHitShipSegments.Contains(shotSegment))
             {
+                GetEnemyPlayer().AllHitShipSegments.Add(shotSegment);
+                //TODO Valami null-t ad vissza
+                GetEnemyPlayer().GetShipBySegment(shotSegment).HitSegments.Add(shotSegment);
                 return true;
             }
             return false;
