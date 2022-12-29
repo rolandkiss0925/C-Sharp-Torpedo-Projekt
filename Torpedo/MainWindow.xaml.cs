@@ -271,6 +271,14 @@ namespace Torpedo
                 DrawSingleMiss(pos, _tmpColor, EnemyCanvas);
             }
         }
+        private void DrawRemainingShips(Player player)
+        {
+            foreach (var ship in player.ShipList)
+            {
+
+            }
+            //DrawSingleSegment();
+        }
         private void RemoveShipsFromCanvasAndPlayer(Player owner)
         {
             owner.Canvas.Children.Clear();
@@ -349,6 +357,8 @@ namespace Torpedo
                 GetEnemyPlayer().AllHitShipSegments.Add(shotSegment);
                 //Change ships segment to be HIT
                 ChangeShipSegmentToHit(shotSegment);
+                //Change ship to DESTROYED if applicable
+                GetEnemyPlayer().GetShipBySegment(shotSegment).DestroyTest();
                 return 1;
             }
             if (GetEnemyPlayer().AllHitShipSegments.Contains(shotSegment) || GetCurrentPlayer().MissedShotLocations.Contains(shotSegment))
