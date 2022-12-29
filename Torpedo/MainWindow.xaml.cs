@@ -67,7 +67,7 @@ namespace Torpedo
             turnCounter = 0;
             
 
-            GenerateShips(player1, _blue);
+            GenerateShips(player1, _greenLight);
             GenerateShips(player2, _greenLight); 
 
             DrawShip(player1.Canvas, player1.ShipList.ToArray());
@@ -131,7 +131,7 @@ namespace Torpedo
 
         private void DrawShip(Canvas canvas, params Ship[] ships)
         {
-            foreach (var s in ships)
+            foreach (var ship in ships)
             {
                 //Hajo kezdopontjat mas szinnel kirajzol
                 /*for (int i = 0; i < s.Segments.Count; i++)
@@ -145,9 +145,17 @@ namespace Torpedo
                         DrawSingleSegment(s.Segments[i], s.Color, canvas);
                     }
                 }*/
-                foreach (var segment in s.Segments)
+                foreach (var segment in ship.Segments)
                 {
-                    DrawSingleSegment(segment, s.Color, canvas);
+                    if (ship.HitSegments.Contains(segment))
+                    {
+                        //If segment is already hit
+                        DrawSingleSegment(segment, _green, canvas);
+                    }
+                    else
+                    {
+                        DrawSingleSegment(segment, ship.Color, canvas);
+                    }  
                 }
             }
 
@@ -328,8 +336,10 @@ namespace Torpedo
         {
             if (GetEnemyPlayer().AllShipSegments.Contains(shotSegment) && !GetEnemyPlayer().AllHitShipSegments.Contains(shotSegment))
             {
+                //If HITS and not already hit
                 GetEnemyPlayer().AllHitShipSegments.Add(shotSegment);
-                GetEnemyPlayer().GetShipBySegment(shotSegment).HitSegments.Add(shotSegment);
+                //Change ships segment to be HIT
+                ChangeShipSegmentToHit(shotSegment);
                 return true;
             }
             return false;
@@ -353,6 +363,14 @@ namespace Torpedo
                 return false;
             }
             
+        }
+
+        private void ChangeShipSegmentToHit(Vector shotSegment)
+        {
+            //Change ships segment to be HIT
+            GetEnemyPlayer().GetShipBySegment(shotSegment).HitSegments.Add(shotSegment);
+            RedrawPlayers(player1, player2);
+            //TODO if delete this if not needed
         }
 
         private void GenerateP1_Click(object sender, RoutedEventArgs e)
