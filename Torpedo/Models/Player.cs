@@ -15,6 +15,7 @@ namespace Torpedo.Models
         public Canvas Canvas { get; set; }
         public List<Vector> AllShipSegments { get; set; }
         public List<Vector> AllHitShipSegments { get; set; }
+        public List<Vector> MissedShotLocations { get; set; }
 
 
         public Player(string name, Canvas canvas)
@@ -27,6 +28,7 @@ namespace Torpedo.Models
             this.Score = 0;
             this.AllShipSegments = new List<Vector>();
             this.AllHitShipSegments = new List<Vector>();
+            this.MissedShotLocations = new List<Vector>();
         }
 
         public void AddShip(params Ship[] ships)

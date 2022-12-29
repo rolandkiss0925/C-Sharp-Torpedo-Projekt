@@ -28,7 +28,8 @@ namespace Torpedo
         Brush _green = new SolidColorBrush(Color.FromRgb(63, 172, 149));
         Brush _blue = new SolidColorBrush(Color.FromRgb(68, 97, 118));
         Brush _blueDark = new SolidColorBrush(Color.FromRgb(44, 33, 55));
-      
+        Brush _tmpColor = new SolidColorBrush(Color.FromRgb(255, 255, 0));
+
         int turnCounter;
 
         //Ideiglenes
@@ -242,7 +243,34 @@ namespace Torpedo
             //Szegmens hozzaadas/kirajzolas
             canvas.Children.Add(shape);
         }
+        private void DrawSingleMiss(Vector position, Brush brush, Canvas canvas)
+        {
+            //Egy szegmens merete
+            var shape = new Rectangle();
+            //var rotate = new RotateTransform(45, 25, 50);
+            shape.Fill = brush;
+            var unitX = canvas.Width / _gameWidth ;
+            var unitY = canvas.Height / _gameHeight ;
+            //var span = Math.Sqrt((unitX * unitX) + (unitY * unitY));
+            //shape.Width = span;
+            //shape.Height = span;
+            shape.Width = unitX;
+            shape.Height = unitY;
 
+            //shape.RenderTransform = rotate;
+            //Szegmens poz.
+            Canvas.SetTop(shape, unitY * position.Y);
+            Canvas.SetLeft(shape, unitX * position.X);
+            //Szegmens hozzaadas/kirajzolas
+            canvas.Children.Add(shape);
+        }
+        private void DrawMisses(Player player)
+        {
+            foreach (var pos in player.MissedShotLocations)
+            {
+                DrawSingleMiss(pos, _tmpColor, EnemyCanvas);
+            }
+        }
         private void RemoveShipsFromCanvasAndPlayer(Player owner)
         {
             owner.Canvas.Children.Clear();
@@ -278,16 +306,14 @@ namespace Torpedo
             return player1;
         }
 
-        private void RedrawPlayers(params Player[] player)
+        private void RedrawCanvases()
         {
-            foreach (var p in player)
-            {
-                p.Canvas.Children.Clear();
-            }
-            foreach (var p in player)
-            {
-                DrawShip(p.Canvas, p.ShipList.ToArray());
-            }
+            EnemyCanvas.Children.Clear();
+            OwnCanvas.Children.Clear();
+            DrawShip(GetEnemyPlayer().Canvas, GetEnemyPlayer().ShipList.ToArray());
+            DrawShip(GetCurrentPlayer().Canvas, GetCurrentPlayer().ShipList.ToArray());
+            //DrawMissedShots(GetCurrentPlayer().MissedShotLocations, _tmpColor, EnemyCanvas);
+            DrawMisses(GetCurrentPlayer());
 
         }
         private void RandomStarter()
@@ -308,6 +334,61 @@ namespace Torpedo
                 MessageBox.Show("Player 1 set to ENEMY");
             }
         }
+        private void UpdateScoreboard(Player player)
+        {
+            CurrentPlayerNameTextBlock.Text = player.Name;
+            TurnTextBlock.Text = turnCounter.ToString();
+            HitsTextBlock.Text = player.Hits.ToString();
+        }
+
+        private int Action(Vector shotSegment)
+        {
+            if (GetEnemyPlayer().AllShipSegments.Contains(shotSegment) && !GetEnemyPlayer().AllHitShipSegments.Contains(shotSegment))
+            {
+                //If HITS and not already hit
+                GetEnemyPlayer().AllHitShipSegments.Add(shotSegment);
+                //Change ships segment to be HIT
+                ChangeShipSegmentToHit(shotSegment);
+                return 1;
+            }
+            if (GetEnemyPlayer().AllHitShipSegments.Contains(shotSegment) || GetCurrentPlayer().MissedShotLocations.Contains(shotSegment))
+            {
+                //Already shot segment being hit
+                return 2;
+            }
+            GetCurrentPlayer().MissedShotLocations.Add(shotSegment);
+            return 0;
+        }
+
+        private bool TakeAction()
+        {
+            Point p = Mouse.GetPosition(EnemyCanvas);
+            Vector targetVector = new Vector(Convert.ToInt32(Math.Floor((p.X / _gameWidth / 3))), Convert.ToInt32(Math.Floor((p.Y / _gameHeight / 3))));
+            string posString = "X: " + targetVector.X.ToString() + " Y: " + targetVector.Y.ToString();
+            switch (Action(targetVector))
+            {
+                case 0:
+                    //Misses
+                    posString += " MISS!";
+                    MessageBox.Show(posString);
+                    PassTurn();
+                    return false;
+                case 1:
+                    //Hits
+                    posString += " HIT!";
+                    MessageBox.Show(posString);
+                    PassTurn();
+                    return true;
+                case 2:
+                    //Hits already hit target
+                    MessageBox.Show("Target already hit!");
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+
         private Player PassTurn()
         {
             OwnCanvas.Visibility = Visibility.Hidden;
@@ -319,57 +400,18 @@ namespace Torpedo
             RemainingCanvas.Visibility = Visibility.Visible;
 
             SwitchPlayerCanvas();
-            RedrawPlayers(player1, player2);
+            RedrawCanvases();
             turnCounter++;
 
             UpdateScoreboard(GetCurrentPlayer());
             return GetCurrentPlayer();
-        }
-        private void UpdateScoreboard(Player player)
-        {
-            CurrentPlayerNameTextBlock.Text = player.Name;
-            TurnTextBlock.Text = turnCounter.ToString();
-            HitsTextBlock.Text = player.Hits.ToString();
-        }
-
-        private bool Action(Vector shotSegment)
-        {
-            if (GetEnemyPlayer().AllShipSegments.Contains(shotSegment) && !GetEnemyPlayer().AllHitShipSegments.Contains(shotSegment))
-            {
-                //If HITS and not already hit
-                GetEnemyPlayer().AllHitShipSegments.Add(shotSegment);
-                //Change ships segment to be HIT
-                ChangeShipSegmentToHit(shotSegment);
-                return true;
-            }
-            return false;
-        }
-
-        private bool TakeAction()
-        {
-            Point p = Mouse.GetPosition(EnemyCanvas);
-            Vector targetVector = new Vector(Convert.ToInt32(Math.Floor((p.X / _gameWidth / 3))), Convert.ToInt32(Math.Floor((p.Y / _gameHeight / 3))));
-            string posString = "X: " + targetVector.X.ToString() + " Y: " + targetVector.Y.ToString();
-            if (Action(targetVector))
-            {
-                posString += " HIT!";
-                MessageBox.Show(posString);
-                return true;
-            }
-            else
-            {
-                posString += " MISS!";
-                MessageBox.Show(posString);
-                return false;
-            }
-            
         }
 
         private void ChangeShipSegmentToHit(Vector shotSegment)
         {
             //Change ships segment to be HIT
             GetEnemyPlayer().GetShipBySegment(shotSegment).HitSegments.Add(shotSegment);
-            RedrawPlayers(player1, player2);
+            RedrawCanvases();
             //TODO if delete this if not needed
         }
 
@@ -388,7 +430,7 @@ namespace Torpedo
         private void SwitchP_Click(object sender, RoutedEventArgs e)
         {
             SwitchPlayerCanvas();
-            RedrawPlayers(player1, player2);
+            RedrawCanvases();
         }
         private void PassTurn_Click(object sender, RoutedEventArgs e)
         {
