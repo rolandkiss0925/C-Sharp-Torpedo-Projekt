@@ -274,10 +274,6 @@ namespace Torpedo
         }
         private void DrawRemainingShips(Player player, Canvas canvas)
         {
-            //DrawSingleSegment(new Vector(0, 0), _greenLight, OwnCanvas, RemainingCanvas);
-            //DrawSingleSegment(new Vector(1, 1), _greenLight, OwnCanvas, RemainingCanvas);
-            //DrawSingleSegment(new Vector(2, 1), _greenLight, OwnCanvas, RemainingCanvas);
-
             Vector start = new Vector(0, 0);
             Vector current = new Vector(0, 0);
             Vector direction = new Vector(1, 0);
@@ -287,8 +283,16 @@ namespace Torpedo
             {
                 for (int i = 0; i < ship.ShipLength; i++)
                 {
-                    DrawSingleSegment(current, _greenLight, OwnCanvas, RemainingCanvas);
-                    current += direction;
+                    if (ship.IsDestroyed)
+                    {
+                        DrawSingleSegment(current, _tmpColor, OwnCanvas, canvas);
+                        current += direction;
+                    }
+                    else
+                    {
+                        DrawSingleSegment(current, _greenLight, OwnCanvas, canvas);
+                        current += direction;
+                    }
                 }
                 start += stackingDirection;
                 current = start;
@@ -347,14 +351,15 @@ namespace Torpedo
             return player1;
         }
 
-        private void RedrawCanvases()
+        private void RedrawCanvases(Player current, Player enemy)
         {
+            RemainingCanvas.Children.Clear();
             EnemyCanvas.Children.Clear();
             OwnCanvas.Children.Clear();
-            DrawShip(GetEnemyPlayer().Canvas, GetEnemyPlayer().ShipList.ToArray());
-            DrawShip(GetCurrentPlayer().Canvas, GetCurrentPlayer().ShipList.ToArray());
-            //DrawMissedShots(GetCurrentPlayer().MissedShotLocations, _tmpColor, EnemyCanvas);
-            DrawMisses(GetCurrentPlayer());
+            DrawShip(enemy.Canvas, enemy.ShipList.ToArray());
+            DrawShip(current.Canvas, current.ShipList.ToArray());
+            DrawRemainingShips(enemy, RemainingCanvas);
+            DrawMisses(current);
 
         }
         private void RandomStarter()
@@ -444,7 +449,7 @@ namespace Torpedo
             RemainingCanvas.Visibility = Visibility.Visible;
 
             SwitchPlayerCanvas();
-            RedrawCanvases();
+            RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
             turnCounter++;
 
             UpdateScoreboard(GetCurrentPlayer());
@@ -455,7 +460,7 @@ namespace Torpedo
         {
             //Change ships segment to be HIT
             GetEnemyPlayer().GetShipBySegment(shotSegment).HitSegments.Add(shotSegment);
-            RedrawCanvases();
+            RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
             //TODO if delete this if not needed
         }
 
@@ -474,7 +479,7 @@ namespace Torpedo
         private void SwitchP_Click(object sender, RoutedEventArgs e)
         {
             SwitchPlayerCanvas();
-            RedrawCanvases();
+            RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
         }
         private void PassTurn_Click(object sender, RoutedEventArgs e)
         {
