@@ -66,7 +66,14 @@ namespace Torpedo.Models
         {
             this.NumOfHits++;
         }
-
+        public bool IsAllShipsDestroyed()
+        {
+            if (AllHitShipSegments.Count == AllShipSegments.Count)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
 }

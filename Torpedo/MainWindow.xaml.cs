@@ -408,24 +408,33 @@ namespace Torpedo
             return 0;
         }
 
-        private bool TakeAction()
+        private bool TakeAction(Player currentPlayer, Player enemyPlayer)
         {
             Point p = Mouse.GetPosition(EnemyCanvas);
             Vector targetVector = new Vector(Convert.ToInt32(Math.Floor((p.X / _gameWidth / 3))), Convert.ToInt32(Math.Floor((p.Y / _gameHeight / 3))));
-            string posString = "X: " + targetVector.X.ToString() + " Y: " + targetVector.Y.ToString();
+            //string posString = "X: " + targetVector.X.ToString() + " Y: " + targetVector.Y.ToString();
             switch (Action(targetVector))
             {
                 case 0:
                     //Misses
-                    posString += " MISS!";
-                    MessageBox.Show(posString);
+                    //posString += " MISS!";
+                    //MessageBox.Show(posString);
                     PassTurn();
                     return false;
                 case 1:
                     //Hits
-                    posString += " HIT!";
-                    MessageBox.Show(posString);
-                    GetCurrentPlayer().GetsScore();
+                    //posString += " HIT!";
+                    //MessageBox.Show(posString);
+                    currentPlayer.GetsScore();
+
+                    string helper = "enemyPlayer.AllHitShipSegments = " + enemyPlayer.AllHitShipSegments.Count.ToString()
+                        + "\ncurrentPlayer.AllShipSegments = " + currentPlayer.AllShipSegments.Count.ToString();
+                    MessageBox.Show(helper);
+
+                    if (enemyPlayer.AllHitShipSegments.Count == currentPlayer.AllShipSegments.Count)
+                    {
+                        GameEnd(currentPlayer, enemyPlayer);
+                    }
                     PassTurn();
                     return true;
                 case 2:
@@ -463,6 +472,12 @@ namespace Torpedo
             RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
             //TODO if delete this if not needed
         }
+        private void GameEnd(Player currentPlayer, Player enemyPlayer)
+        {
+            string winStr = "Congratulations!\nThe winner is: " + currentPlayer.Name + "\nScore: " + currentPlayer.NumOfHits.ToString();
+            MessageBox.Show(winStr);
+            Application.Current.Shutdown();
+        }
 
         private void GenerateP1_Click(object sender, RoutedEventArgs e)
         {
@@ -476,9 +491,14 @@ namespace Torpedo
             DrawShip(player2.Canvas, player2.ShipList.ToArray());
         }
 
-        private void SwitchP_Click(object sender, RoutedEventArgs e)
+        private void HitAllEnemy_Click(object sender, RoutedEventArgs e)
         {
-            SwitchPlayerCanvas();
+            foreach (var ship in GetEnemyPlayer().ShipList)
+            {
+                ship.IsDestroyed = true;
+                ship.Color = _green;
+            }
+            GetEnemyPlayer().AllHitShipSegments = GetEnemyPlayer().AllShipSegments;
             RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
         }
         private void PassTurn_Click(object sender, RoutedEventArgs e)
@@ -488,7 +508,7 @@ namespace Torpedo
 
         private void EnemyCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            TakeAction();
+            TakeAction(GetCurrentPlayer(), GetEnemyPlayer());
         }
     }
 }
