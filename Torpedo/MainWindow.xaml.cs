@@ -382,13 +382,13 @@ namespace Torpedo
             {
                 player1.Canvas = OwnCanvas;
                 player2.Canvas = EnemyCanvas;
-                MessageBox.Show("Player 1 set to OWNCANVAS");
+                //MessageBox.Show("Player 1 set to OWNCANVAS -  random val: " + rInt.ToString());
             }
             else if (rInt == 1)
             {
                 player1.Canvas = EnemyCanvas;
                 player2.Canvas = OwnCanvas;
-                MessageBox.Show("Player 1 set to ENEMY");
+                //MessageBox.Show("Player 1 set to ENEMY -  random val: " + rInt.ToString());
             }
         }
         private void UpdateScoreboard(Player player)
