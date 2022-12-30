@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace Torpedo.Models
 {
-    class Player
+    public class Player
     {
         public string Name { get; set; }
         public int Score { get; set; }
