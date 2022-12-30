@@ -11,11 +11,11 @@
     <Grid>
         <Label Content="Player 1" FontSize="32"  HorizontalAlignment="Left" Margin="104,10,0,0" VerticalAlignment="Top" Foreground="#3fac95"/>
         <Label Content="Name:" FontSize="16" HorizontalAlignment="Left" Margin="35,90,0,0" VerticalAlignment="Top" Foreground="#3fac95"/>
-        <TextBox HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,95,505,0" TextWrapping="Wrap" Text="Your Name" VerticalAlignment="Top" Width="150" Foreground="#2c2137" Background="#3fac95"/>
+        <TextBox Name="Player1Name" HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,95,505,0" TextWrapping="Wrap" Text="Your Name" VerticalAlignment="Top" Width="150" Foreground="#2c2137" Background="#3fac95"/>
 
         <Label Content="Player 2" FontSize="32"  HorizontalAlignment="Right" Margin="0,10,104,0" VerticalAlignment="Top" Foreground="#3fac95"/>
         <Label Content="Name:" FontSize="16" HorizontalAlignment="Left" Margin="505,90,0,0" VerticalAlignment="Top" Foreground="#3fac95"/>
-        <TextBox HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,95,35,0" TextWrapping="Wrap" Text="Your Name" VerticalAlignment="Top" Width="150" Foreground="#2c2137" Background="#3fac95"/>
+        <TextBox Name="Player2Name" HorizontalAlignment="Right" Height="24" FontSize="16" Margin="0,95,35,0" TextWrapping="Wrap" Text="Your Name" VerticalAlignment="Top" Width="150" Foreground="#2c2137" Background="#3fac95"/>
 
         <Button Content="Cancel" Click="OnCancel"  HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="120" Height="32" Padding="0" Margin="50,0,0,35" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
         <Button Content="Start" Click="OnStart"  HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="120" Height="32" Padding="0" Margin="0,0,50,35" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
