@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -28,9 +29,31 @@ namespace Torpedo
         }
         private void OnStart(object sender, RoutedEventArgs e)
         {
-            var newWindow = new MainWindow();
-            newWindow.Show(); //Lehet nem sima Show() kell ez okozhat kesobb problemakat
-            App.Current.MainWindow.Close();
+            try
+            {
+                CheckName(PlayerName.Text);
+
+                //MÁSHOVA KELL A NAVIGÁLÁS --> AI
+
+                /*var newWindow = new MainWindow();
+                newWindow.CurrentPlayerNameTextBlock.Text = PlayerName.Text;
+                //newWindow.Name.ToString() = Player1Name.Text;
+                newWindow.Show(); //Lehet nem sima Show() kell ez okozhat kesobb problemakat
+                App.Current.MainWindow.Close();*/
+            }
+            catch (ArgumentException ex)
+            {
+                //warning
+            }
+        }
+
+        void CheckName(string name)
+        {
+            if (!Regex.IsMatch(name, "^[a-zA-Z0-9]+$"))
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }
+

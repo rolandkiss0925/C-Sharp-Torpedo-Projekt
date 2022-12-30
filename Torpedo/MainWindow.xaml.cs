@@ -33,11 +33,14 @@ namespace Torpedo
         int turnCounter;
 
         //Ideiglenes
-        Player player1 = new Player("", null);
-        Player player2 = new Player("", null);
+        Player player1;// = new Player("", null);
+        Player player2;// = new Player("", null);
 
-        public MainWindow()
+        public MainWindow(Player player1, Player player2)
         {
+            this.player1 = player1;
+            this.player2 = player2;
+
             InitializeComponent();
             RandomStarter();
             //---------Player 1 próba--------
@@ -369,14 +372,14 @@ namespace Torpedo
             
             if (rInt == 0)
             {
-                player1 = new Player("Player 1", OwnCanvas);
-                player2 = new Player("Player 2", EnemyCanvas);
+                player1.Canvas = OwnCanvas;
+                player2.Canvas = EnemyCanvas;
                 MessageBox.Show("Player 1 set to OWNCANVAS");
             }
             else if (rInt == 1)
             {
-                player1 = new Player("Player 1", EnemyCanvas);
-                player2 = new Player("Player 2", OwnCanvas);
+                player1.Canvas = EnemyCanvas;
+                player2.Canvas = OwnCanvas;
                 MessageBox.Show("Player 1 set to ENEMY");
             }
         }

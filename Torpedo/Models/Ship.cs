@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace Torpedo.Models
 {
-    class Ship
+    public class Ship
     {
         public List<Vector> Segments { get; set; }
         public int ShipLength { get; }
