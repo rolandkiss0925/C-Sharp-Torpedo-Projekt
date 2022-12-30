@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3W5EAkcH4/HqKtaSM5rmoGJoyUjtU0S/8D4tXO650f3C+yBouH+BbTMqsL3QHCl0+iNMTvfiuDyi1gAToYejYw==",
+  "dgSpecHash": "IzGe5BhxB7ldEAGOkgxz4w1DXbezvSCguK7JquxfPFaK3+XORnkxcwnRXO+tMuihrGnMgUUAU/SyLe3hB2iI8w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Pedagogus\\NI\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+  "projectFilePath": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
   "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\Pedagogus\\NI\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
