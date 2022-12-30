@@ -17,14 +17,17 @@ using Torpedo.Models;
 
 namespace Torpedo
 {
-    /// <summary>
-    /// Interaction logic for Player1vsPlayer2.xaml
-    /// </summary>
     public partial class Player1vsPlayer2 : Page
     {
+        Brush _greenLight = new SolidColorBrush(Color.FromRgb(161, 239, 140));
+        Brush _green = new SolidColorBrush(Color.FromRgb(63, 172, 149));
+        Brush _blue = new SolidColorBrush(Color.FromRgb(68, 97, 118));
+        Brush _blueDark = new SolidColorBrush(Color.FromRgb(44, 33, 55));
+
         public Player1vsPlayer2()
         {
             InitializeComponent();
+            NameWarning.Visibility = Visibility.Hidden;
         }
         private void OnCancel(object sender, RoutedEventArgs e)
         {
@@ -52,6 +55,9 @@ namespace Torpedo
         {
             if (!Regex.IsMatch(name, "^[a-zA-Z0-9]+$"))
             {
+                NameWarning.Visibility = Visibility.Visible;
+                //NameWarning.Foreground = _greenLight;
+                NameWarning.Foreground = _green;
                 throw new ArgumentException();
             }
 

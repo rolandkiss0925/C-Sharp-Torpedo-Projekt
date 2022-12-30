@@ -28,7 +28,8 @@ namespace Torpedo
         Brush _green = new SolidColorBrush(Color.FromRgb(63, 172, 149));
         Brush _blue = new SolidColorBrush(Color.FromRgb(68, 97, 118));
         Brush _blueDark = new SolidColorBrush(Color.FromRgb(44, 33, 55));
-        Brush _tmpColor = new SolidColorBrush(Color.FromRgb(255, 255, 0));
+        Brush _missColor = new SolidColorBrush(Color.FromRgb(68, 97, 118)); //blue
+        Brush _hitColor = new SolidColorBrush(Color.FromRgb(161, 239, 140)); //greenLight
 
         int turnCounter;
 
@@ -69,13 +70,12 @@ namespace Torpedo
             //-------------------------------
 
             turnCounter = 0;
-            
 
             GenerateShips(player1, _greenLight);
             GenerateShips(player2, _greenLight); 
 
-            DrawShip(player1.Canvas, player1.ShipList.ToArray());
-            DrawShip(player2.Canvas, player2.ShipList.ToArray());
+            DrawShip(GetCurrentPlayer().Canvas, GetCurrentPlayer().ShipList.ToArray());
+            //DrawShip(player2.Canvas, player2.ShipList.ToArray());
             DrawRemainingShips(GetCurrentPlayer(), RemainingCanvas);
         }
 
@@ -247,7 +247,7 @@ namespace Torpedo
             //Szegmens hozzaadas/kirajzolas
             canvasToDraw.Children.Add(shape);
         }
-        private void DrawSingleMiss(Vector position, Brush brush, Canvas canvas)
+        private void DrawSingleShot(Vector position, Brush brush, Canvas canvas)
         {
             //Egy szegmens merete
             var shape = new Rectangle();
@@ -272,7 +272,14 @@ namespace Torpedo
         {
             foreach (var pos in player.MissedShotLocations)
             {
-                DrawSingleMiss(pos, _tmpColor, EnemyCanvas);
+                DrawSingleShot(pos, _missColor, EnemyCanvas);
+            }
+        }
+        private void DrawHits(Player current, Player enemy)
+        {
+            foreach (var pos in enemy.AllHitShipSegments)
+            {
+                DrawSingleShot(pos, _hitColor, EnemyCanvas);
             }
         }
         private void DrawRemainingShips(Player player, Canvas canvas)
@@ -288,7 +295,7 @@ namespace Torpedo
                 {
                     if (ship.IsDestroyed)
                     {
-                        DrawSingleSegment(current, _tmpColor, OwnCanvas, canvas);
+                        DrawSingleSegment(current, _hitColor, OwnCanvas, canvas);
                         current += direction;
                     }
                     else
@@ -359,10 +366,11 @@ namespace Torpedo
             RemainingCanvas.Children.Clear();
             EnemyCanvas.Children.Clear();
             OwnCanvas.Children.Clear();
-            DrawShip(enemy.Canvas, enemy.ShipList.ToArray());
+            //DrawShip(enemy.Canvas, enemy.ShipList.ToArray());
             DrawShip(current.Canvas, current.ShipList.ToArray());
             DrawRemainingShips(enemy, RemainingCanvas);
             DrawMisses(current);
+            DrawHits(current, enemy);
 
         }
         private void RandomStarter()
@@ -420,8 +428,7 @@ namespace Torpedo
             {
                 case 0:
                     //Misses
-                    //posString += " MISS!";
-                    //MessageBox.Show(posString);
+                    MessageBox.Show("You Missed :(");
                     PassTurn();
                     return false;
                 case 1:
@@ -430,9 +437,7 @@ namespace Torpedo
                     //MessageBox.Show(posString);
                     currentPlayer.GetsScore();
 
-                    string helper = "enemyPlayer.AllHitShipSegments = " + enemyPlayer.AllHitShipSegments.Count.ToString()
-                        + "\ncurrentPlayer.AllShipSegments = " + currentPlayer.AllShipSegments.Count.ToString();
-                    MessageBox.Show(helper);
+                    MessageBox.Show("You hit a ship!");
 
                     if (enemyPlayer.AllHitShipSegments.Count == currentPlayer.AllShipSegments.Count)
                     {
@@ -442,7 +447,7 @@ namespace Torpedo
                     return true;
                 case 2:
                     //Hits already hit target
-                    MessageBox.Show("Target already hit!");
+                    MessageBox.Show("Target already hit.");
                     break;
                 default:
                     break;
@@ -477,36 +482,12 @@ namespace Torpedo
         }
         private void GameEnd(Player currentPlayer, Player enemyPlayer)
         {
-            string winStr = "Congratulations!\nThe winner is: " + currentPlayer.Name + "\nScore: " + currentPlayer.NumOfHits.ToString();
+            //int Score = 1000 - (turnCounter * 10) - currentPlayer.MissedShotLocations.Count;
+            int Score = 1 / turnCounter * 100000;
+            string winStr = "Congratulations!\nThe winner is: " + currentPlayer.Name + "\nScore: " + Score.ToString();
             MessageBox.Show(winStr);
+            //return Score;
             Application.Current.Shutdown();
-        }
-
-        private void GenerateP1_Click(object sender, RoutedEventArgs e)
-        {
-            GenerateShips(player1, _greenLight);
-            DrawShip(player1.Canvas, player1.ShipList.ToArray());
-        }
-
-        private void GenerateP2_Click(object sender, RoutedEventArgs e)
-        {
-            GenerateShips(player2, _green);
-            DrawShip(player2.Canvas, player2.ShipList.ToArray());
-        }
-
-        private void HitAllEnemy_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var ship in GetEnemyPlayer().ShipList)
-            {
-                ship.IsDestroyed = true;
-                ship.Color = _green;
-            }
-            GetEnemyPlayer().AllHitShipSegments = GetEnemyPlayer().AllShipSegments;
-            RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
-        }
-        private void PassTurn_Click(object sender, RoutedEventArgs e)
-        {
-            PassTurn();
         }
 
         private void EnemyCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
