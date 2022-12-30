@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Torpedo.Models
@@ -9,23 +10,25 @@ namespace Torpedo.Models
     {
         public string Name { get; set; }
         public int Score { get; set; }
-        public int Hits { get; set; }
+        public int NumOfHits { get; set; }
         public List<Ship> ShipList { get; set; }
         public Canvas Canvas { get; set; }
         public List<Vector> AllShipSegments { get; set; }
-        public List<Vector> ShotSegments { get; set; }
+        public List<Vector> AllHitShipSegments { get; set; }
+        public List<Vector> MissedShotLocations { get; set; }
 
 
         public Player(string name, Canvas canvas)
         {
             this.Name = name;
             this.Canvas = canvas;
-            this.Hits = 0;
+            this.NumOfHits = 0;
             //this.MyTurn = false;
             this.ShipList = new List<Ship>();
             this.Score = 0;
             this.AllShipSegments = new List<Vector>();
-            this.ShotSegments = new List<Vector>();
+            this.AllHitShipSegments = new List<Vector>();
+            this.MissedShotLocations = new List<Vector>();
         }
 
         public void AddShip(params Ship[] ships)
@@ -39,7 +42,6 @@ namespace Torpedo.Models
                 }
             }
         }
-
         public List<Ship> RemoveAllShip()
         {
             List<Ship> returnList = this.ShipList;
@@ -49,11 +51,28 @@ namespace Torpedo.Models
 
             return returnList;
         }
-
-        public int AddHit()
+        public Ship GetShipBySegment(Vector segment)
         {
-            this.Hits++;
-            return Hits;
+            foreach (var ship in this.ShipList)
+            {
+                if (ship.Segments.Contains(segment))
+                {
+                    return ship;
+                }
+            }
+            return null;
+        }
+        public void GetsScore()
+        {
+            this.NumOfHits++;
+        }
+        public bool IsAllShipsDestroyed()
+        {
+            if (AllHitShipSegments.Count == AllShipSegments.Count)
+            {
+                return true;
+            }
+            return false;
         }
     }
 
