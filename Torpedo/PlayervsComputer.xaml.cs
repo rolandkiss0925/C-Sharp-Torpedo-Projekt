@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Torpedo.Models;
 
 namespace Torpedo
 {
@@ -32,6 +33,12 @@ namespace Torpedo
             try
             {
                 CheckName(PlayerName.Text);
+
+                Player player1 = new Player(PlayerName.Text, null);
+                Player com = new Player("COM", null);
+                var newWindow = new MainWindow(player1, com, true);
+                newWindow.Show(); //Lehet nem sima Show() kell ez okozhat kesobb problemakat
+                App.Current.MainWindow.Close();
 
                 //MÁSHOVA KELL A NAVIGÁLÁS --> AI
 

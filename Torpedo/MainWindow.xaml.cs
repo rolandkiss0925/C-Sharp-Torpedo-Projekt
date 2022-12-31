@@ -28,7 +28,8 @@ namespace Torpedo
         Brush _green = new SolidColorBrush(Color.FromRgb(63, 172, 149));
         Brush _blue = new SolidColorBrush(Color.FromRgb(68, 97, 118));
         Brush _blueDark = new SolidColorBrush(Color.FromRgb(44, 33, 55));
-        Brush _tmpColor = new SolidColorBrush(Color.FromRgb(255, 255, 0));
+        Brush _missColor = new SolidColorBrush(Color.FromRgb(68, 97, 118)); //blue
+        Brush _hitColor = new SolidColorBrush(Color.FromRgb(161, 239, 140)); //greenLight
 
         int turnCounter;
 
@@ -36,47 +37,33 @@ namespace Torpedo
         Player player1;// = new Player("", null);
         Player player2;// = new Player("", null);
 
-        public MainWindow(Player player1, Player player2)
+        public bool isVsCom_Global = false;
+        public bool isPrevAiShotHit = false;
+
+        public MainWindow(Player player1, Player player2, bool isVsCom)
         {
             this.player1 = player1;
             this.player2 = player2;
-
+            isVsCom_Global = isVsCom;
+            turnCounter = 0;
             InitializeComponent();
             RandomStarter();
-            //---------Player 1 próba--------
-            
-
             UpdateScoreboard(GetCurrentPlayer());
-
-            //Ship ship1 = MakeShip(3, (new Vector(0, 0)), _neonGreen, player1);
-            //Ship ship2 = MakeShip(2, (new Vector(2, 4)), _neonGreen, player1);
-            //Ship ship3 = MakeShip(5, (new Vector(6, 8)), _neonGreen, player1);
-            //Ship ship4 = MakeShip(4, (new Vector(9, 2)), _neonGreen, player1);
-
-            //player1.AddShip(ship1, ship2, ship3, ship4);
-            //-------------------------------
-
-            //---------Player 2 próba--------
-
-            /*
-            Ship ship11 = MakeShip(2, (new Vector(0, 0)), _lightGreen, player2);
-            Ship ship22 = MakeShip(3, (new Vector(2, 2)), _lightGreen, player2);
-            Ship ship33 = MakeShip(5, (new Vector(4, 4)), _lightGreen, player2);
-            Ship ship44 = MakeShip(5, (new Vector(6, 6)), _lightGreen, player2);
-            Ship ship55 = MakeShip(4, (new Vector(8, 8)), _lightGreen, player2);
-            */
-            //player2.AddShip(ship11, ship22, ship33, ship44, ship55);
-            //-------------------------------
-
-            turnCounter = 0;
-            
 
             GenerateShips(player1, _greenLight);
             GenerateShips(player2, _greenLight); 
 
-            DrawShip(player1.Canvas, player1.ShipList.ToArray());
-            DrawShip(player2.Canvas, player2.ShipList.ToArray());
+
+
+            DrawShip(GetCurrentPlayer().Canvas, GetCurrentPlayer().ShipList.ToArray());
+            //DrawShip(player2.Canvas, player2.ShipList.ToArray());
             DrawRemainingShips(GetCurrentPlayer(), RemainingCanvas);
+
+            AiShotButton.Visibility = Visibility.Hidden;
+            if (isVsCom)
+            {
+                AiShotButton.Visibility = Visibility.Visible;
+            }
         }
 
         private List<Ship> GenerateShips(Player player, Brush color)
@@ -247,7 +234,7 @@ namespace Torpedo
             //Szegmens hozzaadas/kirajzolas
             canvasToDraw.Children.Add(shape);
         }
-        private void DrawSingleMiss(Vector position, Brush brush, Canvas canvas)
+        private void DrawSingleShot(Vector position, Brush brush, Canvas canvas)
         {
             //Egy szegmens merete
             var shape = new Rectangle();
@@ -272,7 +259,14 @@ namespace Torpedo
         {
             foreach (var pos in player.MissedShotLocations)
             {
-                DrawSingleMiss(pos, _tmpColor, EnemyCanvas);
+                DrawSingleShot(pos, _missColor, EnemyCanvas);
+            }
+        }
+        private void DrawHits(Player current, Player enemy)
+        {
+            foreach (var pos in enemy.AllHitShipSegments)
+            {
+                DrawSingleShot(pos, _hitColor, EnemyCanvas);
             }
         }
         private void DrawRemainingShips(Player player, Canvas canvas)
@@ -288,7 +282,7 @@ namespace Torpedo
                 {
                     if (ship.IsDestroyed)
                     {
-                        DrawSingleSegment(current, _tmpColor, OwnCanvas, canvas);
+                        DrawSingleSegment(current, _blue, OwnCanvas, canvas);
                         current += direction;
                     }
                     else
@@ -359,13 +353,14 @@ namespace Torpedo
             RemainingCanvas.Children.Clear();
             EnemyCanvas.Children.Clear();
             OwnCanvas.Children.Clear();
-            DrawShip(enemy.Canvas, enemy.ShipList.ToArray());
+            //DrawShip(enemy.Canvas, enemy.ShipList.ToArray());
             DrawShip(current.Canvas, current.ShipList.ToArray());
             DrawRemainingShips(enemy, RemainingCanvas);
             DrawMisses(current);
+            DrawHits(current, enemy);
 
         }
-        private void RandomStarter()
+        private Player RandomStarter()
         {
             Random r = new Random();
             int rInt = r.Next(0, 2);
@@ -374,14 +369,17 @@ namespace Torpedo
             {
                 player1.Canvas = OwnCanvas;
                 player2.Canvas = EnemyCanvas;
-                MessageBox.Show("Player 1 set to OWNCANVAS");
+                MessageBox.Show("Starter Player: " + player1.Name);
+                return player1;
             }
             else if (rInt == 1)
             {
                 player1.Canvas = EnemyCanvas;
                 player2.Canvas = OwnCanvas;
-                MessageBox.Show("Player 1 set to ENEMY");
+                MessageBox.Show("Starter Player: " + player2.Name);
+                return player2;
             }
+            return player2;
         }
         private void UpdateScoreboard(Player player)
         {
@@ -420,8 +418,7 @@ namespace Torpedo
             {
                 case 0:
                     //Misses
-                    //posString += " MISS!";
-                    //MessageBox.Show(posString);
+                    MessageBox.Show("You Missed :(");
                     PassTurn();
                     return false;
                 case 1:
@@ -430,9 +427,7 @@ namespace Torpedo
                     //MessageBox.Show(posString);
                     currentPlayer.GetsScore();
 
-                    string helper = "enemyPlayer.AllHitShipSegments = " + enemyPlayer.AllHitShipSegments.Count.ToString()
-                        + "\ncurrentPlayer.AllShipSegments = " + currentPlayer.AllShipSegments.Count.ToString();
-                    MessageBox.Show(helper);
+                    MessageBox.Show("You hit a ship!");
 
                     if (enemyPlayer.AllHitShipSegments.Count == currentPlayer.AllShipSegments.Count)
                     {
@@ -442,7 +437,40 @@ namespace Torpedo
                     return true;
                 case 2:
                     //Hits already hit target
-                    MessageBox.Show("Target already hit!");
+                    MessageBox.Show("Target already hit.");
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+        private bool Ai_TakeAction(Vector targetVector)
+        {
+            switch (Action(targetVector))
+            {
+                case 0:
+                    //Misses
+                    MessageBox.Show(player2.Name + " Missed.");
+                    isPrevAiShotHit = false;
+                    PassTurn();
+                    return false;
+                case 1:
+                    //Hits
+                    //posString += " HIT!";
+                    //MessageBox.Show(posString);
+                    player2.GetsScore();
+                    isPrevAiShotHit = true;
+                    MessageBox.Show(player2.Name + "Hit your ship!");
+
+                    if (player1.AllHitShipSegments.Count == player2.AllShipSegments.Count)
+                    {
+                        GameEnd(player2, player1);
+                    }
+                    PassTurn();
+                    return true;
+                case 2:
+                    //Hits already hit target
+                    MessageBox.Show("Target already hit.");
                     break;
                 default:
                     break;
@@ -452,6 +480,8 @@ namespace Torpedo
 
         private Player PassTurn()
         {
+            SwitchPlayerCanvas();
+            
             OwnCanvas.Visibility = Visibility.Hidden;
             EnemyCanvas.Visibility = Visibility.Hidden;
             RemainingCanvas.Visibility = Visibility.Hidden;
@@ -460,12 +490,32 @@ namespace Torpedo
             EnemyCanvas.Visibility = Visibility.Visible;
             RemainingCanvas.Visibility = Visibility.Visible;
 
-            SwitchPlayerCanvas();
             RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
             turnCounter++;
-
             UpdateScoreboard(GetCurrentPlayer());
             return GetCurrentPlayer();
+        }
+        private void AiTurn()
+        {
+            if (GetCurrentPlayer() == player2)
+            {
+                List<Vector> allComputerShots = player2.MissedShotLocations;
+                allComputerShots.AddRange(player1.AllHitShipSegments);
+                if (allComputerShots.Count > 0)
+                {
+                    //If com already shot
+                    isPrevAiShotHit = Ai_TakeAction(AiShotDecision(isPrevAiShotHit));
+                }
+                else
+                {
+                    //Com first shot
+                    isPrevAiShotHit = Ai_TakeAction(AiShotDecision(false));
+                }
+            }
+            else
+            {
+                MessageBox.Show("It's still your turn!");
+            }
         }
 
         private void ChangeShipSegmentToHit(Vector shotSegment)
@@ -475,43 +525,87 @@ namespace Torpedo
             RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
             //TODO if delete this if not needed
         }
+        private Vector AiShotDecision(bool isPreviousHit)
+        {
+            Vector shotToTake = new Vector(0, 0);
+            Random r = new Random();
+            //int rInt = r.Next();
+            shotToTake = new Vector(r.Next(0, 10), r.Next(0, 10));
+            List<Vector> allComputerShots = player2.MissedShotLocations;
+            allComputerShots.AddRange(player1.AllHitShipSegments);
+
+            if (!isPreviousHit)
+            {
+                //If previous was miss then random shooting
+                while (allComputerShots.Contains(shotToTake))
+                {
+                    shotToTake = new Vector(r.Next(0, 10), r.Next(0, 10));
+                }               
+            }
+            else
+            {
+                //If previous was Hit
+                Vector guessDirection = new Vector();
+                do
+                {
+                    int rInt = r.Next(0, 5);
+                    switch (rInt)
+                    {
+                        case 0:
+                            guessDirection = new Vector(0, 1);
+                            break;
+                        case 1:
+                            guessDirection = new Vector(1, 0);
+                            break;
+                        case 2:
+                            guessDirection = new Vector(0, -1);
+                            break;
+                        case 3:
+                            guessDirection = new Vector(-1, 0);
+                            break;
+                        default:
+                            guessDirection = new Vector(0, 1);
+                            break;
+                    }
+                    shotToTake = player1.AllHitShipSegments.Last() + guessDirection;
+                } while (allComputerShots.Contains(shotToTake));
+            }
+            return shotToTake;
+        }
         private void GameEnd(Player currentPlayer, Player enemyPlayer)
         {
-            string winStr = "Congratulations!\nThe winner is: " + currentPlayer.Name + "\nScore: " + currentPlayer.NumOfHits.ToString();
+            //int Score = 1000 - (turnCounter * 10) - currentPlayer.MissedShotLocations.Count;
+            double Score = 1.0 / (double)turnCounter * 100000.0;
+            Score = Convert.ToInt32(Score);
+            string winStr = "Congratulations!\nThe winner is: " + currentPlayer.Name + "\nScore: " + Score;
             MessageBox.Show(winStr);
+            //return Score;
             Application.Current.Shutdown();
-        }
-
-        private void GenerateP1_Click(object sender, RoutedEventArgs e)
-        {
-            GenerateShips(player1, _greenLight);
-            DrawShip(player1.Canvas, player1.ShipList.ToArray());
-        }
-
-        private void GenerateP2_Click(object sender, RoutedEventArgs e)
-        {
-            GenerateShips(player2, _green);
-            DrawShip(player2.Canvas, player2.ShipList.ToArray());
-        }
-
-        private void HitAllEnemy_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var ship in GetEnemyPlayer().ShipList)
-            {
-                ship.IsDestroyed = true;
-                ship.Color = _green;
-            }
-            GetEnemyPlayer().AllHitShipSegments = GetEnemyPlayer().AllShipSegments;
-            RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
-        }
-        private void PassTurn_Click(object sender, RoutedEventArgs e)
-        {
-            PassTurn();
         }
 
         private void EnemyCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            TakeAction(GetCurrentPlayer(), GetEnemyPlayer());
+            if (!isVsCom_Global)
+            {
+                TakeAction(GetCurrentPlayer(), GetEnemyPlayer());
+            }
+            else
+            {
+                if (GetCurrentPlayer() == player1)
+                {
+                    TakeAction(GetCurrentPlayer(), GetEnemyPlayer());
+                }
+            }
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AiTurn();
+        }
+        private void End_Click(object sender, RoutedEventArgs e)
+        {
+            GameEnd(GetCurrentPlayer(), GetEnemyPlayer());
         }
     }
 }

@@ -35,6 +35,7 @@ namespace Torpedo.Models
             if (HitSegments.Count == ShipLength)
             {
                 this.IsDestroyed = true;
+                //System.Windows.MessageBox.Show("A SHIP IS DED");
             }
             return this.IsDestroyed;
         }

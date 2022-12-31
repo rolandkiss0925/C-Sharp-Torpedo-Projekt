@@ -71,10 +71,8 @@
             </Canvas>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Generate P2" Click="GenerateP2_Click"  Width="72" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
-            <Button Content="Generate P1" Click="GenerateP1_Click"  Width="72" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
-            <Button Content="Hit all enemy ships" Click="HitAllEnemy_Click"  Width="80" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
-            <Button Content="Pass Turn" Click="PassTurn_Click"  Width="80" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+            <Button Name="AiShotButton" Content="Ai shot" Click="Button_Click"  Width="80" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+            <Button Name="end" Content="endt" Click="End_Click"  Width="80" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
         </StackPanel>
 
     </StackPanel>
