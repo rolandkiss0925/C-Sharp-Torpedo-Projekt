@@ -170,3 +170,5 @@ c:\Users\roli\VisualStudio2022\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcore
 c:\Users\roli\VisualStudio2022\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Torpedo.genruntimeconfig.cache
 c:\Users\roli\VisualStudio2022\C-Sharp-Torpedo-Projekt\Torpedo\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 c:\Users\roli\VisualStudio2022\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Torpedo.csproj.CopyComplete
+C:\Users\gerix\source\repos\Torpedo_Git\C-Sharp-Torpedo-Projekt\Torpedo\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\gerix\source\repos\Torpedo_Git\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\Torpedo.csproj.CopyComplete

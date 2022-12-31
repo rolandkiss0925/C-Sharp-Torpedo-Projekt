@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\roli\\VisualStudio2022\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj": {}
+    "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj": {}
   },
   "projects": {
-    "c:\\Users\\roli\\VisualStudio2022\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj": {
+    "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\roli\\VisualStudio2022\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+        "projectUniqueName": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
         "projectName": "Torpedo",
-        "projectPath": "c:\\Users\\roli\\VisualStudio2022\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
-        "packagesPath": "C:\\Users\\roli\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\roli\\VisualStudio2022\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\",
+        "projectPath": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\Torpedo.csproj",
+        "packagesPath": "C:\\Users\\gerix\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gerix\\source\\repos\\Torpedo_Git\\C-Sharp-Torpedo-Projekt\\Torpedo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\roli\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gerix\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,24 +55,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.10, 3.1.10]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.22, 3.1.22]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -81,7 +63,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
         }
       }
     }

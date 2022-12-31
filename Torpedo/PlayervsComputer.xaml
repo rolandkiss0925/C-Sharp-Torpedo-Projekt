@@ -14,5 +14,6 @@
         <TextBox Name="PlayerName" HorizontalAlignment="Right" FontSize="16" Margin="0,95,270,0" TextWrapping="Wrap" Text="Your Name" VerticalAlignment="Top" Width="150" Foreground="#2c2137" Background="#3fac95"/>
         <Button Content="Cancel" Click="OnCancel"  HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="120" Height="32" Padding="0" Margin="50,0,0,35" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
         <Button Content="Start" Click="OnStart"  HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="120" Height="32" Padding="0" Margin="0,0,50,35" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,225,0,0" Text="Hint: To see the Computer's ships, press F5 on your turn!" TextWrapping="Wrap" Foreground="#3fac95" FontSize="14" VerticalAlignment="Top"/>
     </Grid>
 </Page>
