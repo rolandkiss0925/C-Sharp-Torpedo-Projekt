@@ -30,6 +30,7 @@
                 <DataGridTextColumn Header="Player's hits" IsReadOnly="True" Width="1*"></DataGridTextColumn>
                 <DataGridTextColumn Header="Winner" IsReadOnly="True" Width="1*"></DataGridTextColumn>
             </DataGrid.Columns>
+            
         </DataGrid>
         
         <Button Content="Cancel" Click="OnCancel" Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="120" Height="32" Padding="0" Margin="50,0,0,35" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>

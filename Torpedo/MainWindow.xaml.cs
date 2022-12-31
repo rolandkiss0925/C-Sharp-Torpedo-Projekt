@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Vector = Torpedo.Models.Vector;
 using Ship = Torpedo.Models.Ship;
 using Player = Torpedo.Models.Player;
+using JSONScores = Torpedo.Models.JSONScores;
 
 namespace Torpedo
 {
@@ -347,17 +348,31 @@ namespace Torpedo
             //MessageBox.Show("Enemy: P1 \nplayer2.Canvas.Name != EnemyCanvas.Name");
             return player1;
         }
-
+       
         private void RedrawCanvases(Player current, Player enemy)
         {
-            RemainingCanvas.Children.Clear();
-            EnemyCanvas.Children.Clear();
-            OwnCanvas.Children.Clear();
-            //DrawShip(enemy.Canvas, enemy.ShipList.ToArray());
-            DrawShip(current.Canvas, current.ShipList.ToArray());
-            DrawRemainingShips(enemy, RemainingCanvas);
-            DrawMisses(current);
-            DrawHits(current, enemy);
+            if (isVsCom_Global && enemy == player1)
+            {
+                RemainingCanvas.Children.Clear();
+                EnemyCanvas.Children.Clear();
+                OwnCanvas.Children.Clear();
+                //DrawShip(current.Canvas, current.ShipList.ToArray());
+                DrawRemainingShips(enemy, RemainingCanvas);
+                DrawMisses(current);
+                DrawHits(current, enemy);
+            }
+            else
+            {
+                RemainingCanvas.Children.Clear();
+                EnemyCanvas.Children.Clear();
+                OwnCanvas.Children.Clear();
+                //DrawShip(enemy.Canvas, enemy.ShipList.ToArray());
+                DrawShip(current.Canvas, current.ShipList.ToArray());
+                DrawRemainingShips(enemy, RemainingCanvas);
+                DrawMisses(current);
+                DrawHits(current, enemy);
+            }
+            
 
         }
         private Player RandomStarter()
@@ -480,6 +495,16 @@ namespace Torpedo
 
         private Player PassTurn()
         {
+            if (isVsCom_Global && GetCurrentPlayer() == player2)
+            {
+                SwitchPlayerCanvas();
+                
+                RedrawCanvases(GetCurrentPlayer(), GetEnemyPlayer());
+               
+                turnCounter++;
+                UpdateScoreboard(GetCurrentPlayer());
+                return GetCurrentPlayer();
+            }
             SwitchPlayerCanvas();
             
             OwnCanvas.Visibility = Visibility.Hidden;
@@ -579,7 +604,11 @@ namespace Torpedo
             Score = Convert.ToInt32(Score);
             string winStr = "Congratulations!\nThe winner is: " + currentPlayer.Name + "\nScore: " + Score;
             MessageBox.Show(winStr);
-            //return Score;
+
+            JSONScores scores = new JSONScores((player1.Name, player1.NumOfHits), (player2.Name, player2.NumOfHits), turnCounter, currentPlayer.Name);
+            scores.SaveScores(scores);
+
+            //return (int) Score;
             Application.Current.Shutdown();
         }
 
@@ -597,6 +626,16 @@ namespace Torpedo
                 }
             }
             
+        }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F5)
+            {
+                if (isVsCom_Global && GetCurrentPlayer() == player1)
+                {
+                    DrawShip(GetEnemyPlayer().Canvas, GetEnemyPlayer().ShipList.ToArray());
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
