@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\gerix\source\repos\Torpedo_Git\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\
+c:\Users\roli\VisualStudio2022\C-Sharp-Torpedo-Projekt\Torpedo\obj\Debug\netcoreapp3.1\
 Torpedo
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
-C:\Users\gerix\source\repos\Torpedo_Git\C-Sharp-Torpedo-Projekt\Torpedo\App.xaml
+c:\Users\roli\VisualStudio2022\C-Sharp-Torpedo-Projekt\Torpedo\App.xaml
 6767482291
 
-13-958788441
-192-1533232326
+14354045500
+1931810184003
 Beginning.xaml;Home.xaml;MainWindow.xaml;Player1vsPlayer2.xaml;PlayervsComputer.xaml;Scores.xaml;
 
-True
+False
 

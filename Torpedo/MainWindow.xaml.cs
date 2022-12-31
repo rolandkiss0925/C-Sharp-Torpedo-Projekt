@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Vector = Torpedo.Models.Vector;
 using Ship = Torpedo.Models.Ship;
 using Player = Torpedo.Models.Player;
+using JSONScores = Torpedo.Models.JSONScores;
 
 namespace Torpedo
 {
@@ -572,15 +573,19 @@ namespace Torpedo
             }
             return shotToTake;
         }
-        private void GameEnd(Player currentPlayer, Player enemyPlayer)
+        private int GameEnd(Player currentPlayer, Player enemyPlayer)
         {
             //int Score = 1000 - (turnCounter * 10) - currentPlayer.MissedShotLocations.Count;
             double Score = 1.0 / (double)turnCounter * 100000.0;
             Score = Convert.ToInt32(Score);
             string winStr = "Congratulations!\nThe winner is: " + currentPlayer.Name + "\nScore: " + Score;
             MessageBox.Show(winStr);
-            //return Score;
-            Application.Current.Shutdown();
+
+            JSONScores scores = new JSONScores((player1.Name, player1.NumOfHits), (player2.Name, player2.NumOfHits), turnCounter, currentPlayer.Name);
+            scores.SaveScores(scores);
+
+            return (int) Score;
+            //Application.Current.Shutdown();
         }
 
         private void EnemyCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

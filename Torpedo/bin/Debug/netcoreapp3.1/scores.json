@@ -1,0 +1,5 @@
+[
+{"FirstPlayerProperties":{"Item1":"Player1Name","Item2":1},"SecondPlayerProperties":{"Item1":"Player2Name","Item2":1},"Rounds":9,"Winner":"Player2Name"}
+,
+{"FirstPlayerProperties":{"Item1":"Player1","Item2":4},"SecondPlayerProperties":{"Item1":"COM","Item2":2},"Rounds":15,"Winner":"COM"}
+]
