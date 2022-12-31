@@ -70,7 +70,10 @@
                 </Canvas.Background>
             </Canvas>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Name="AiShotButton" Content="Ai shot" Click="Button_Click"  Width="80" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+            <Button Name="end" Content="endt" Click="End_Click"  Width="80" Height="32" Padding="0" Margin="5,0,5,10" Background="#446176" Foreground="#3fac95" BorderBrush="#3fac95"/>
+        </StackPanel>
 
     </StackPanel>
 

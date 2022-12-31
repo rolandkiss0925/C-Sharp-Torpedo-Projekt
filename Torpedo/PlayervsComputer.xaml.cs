@@ -36,7 +36,7 @@ namespace Torpedo
 
                 Player player1 = new Player(PlayerName.Text, null);
                 Player com = new Player("COM", null);
-                var newWindow = new MainWindow(player1, com);
+                var newWindow = new MainWindow(player1, com, true);
                 newWindow.Show(); //Lehet nem sima Show() kell ez okozhat kesobb problemakat
                 App.Current.MainWindow.Close();
 

@@ -42,7 +42,7 @@ namespace Torpedo
                 CheckName(Player2Name.Text);
                 Player player1 = new Player(Player1Name.Text, null);
                 Player player2 = new Player(Player2Name.Text, null);
-                var newWindow = new MainWindow(player1, player2);
+                var newWindow = new MainWindow(player1, player2, false);
                 newWindow.Show(); //Lehet nem sima Show() kell ez okozhat kesobb problemakat
                 App.Current.MainWindow.Close();
             }catch(ArgumentException ex)
